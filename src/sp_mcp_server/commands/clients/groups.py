@@ -1,0 +1,147 @@
+from typing import Any, Dict
+from ..base import BaseCommand
+
+class DefineNodeGroup(BaseCommand):
+    @property
+    def name(self) -> str:
+        return "define_node_group"
+    
+    @property
+    def description(self) -> str:
+        return (
+            "Defines a **Client Group** (known as a **Node Group** in SP). Groups allow you to manage multiple Clients collectively.\n"
+            "**Input Parameters**:\n"
+            "- group_name (Required): Name of the new Client Group.\n"
+            "- description (Optional): Description of the group.\n"
+            "**Output Parameters**:\n"
+            "- Result: Success message indicating the group was defined."
+        )
+        
+    @property
+    def args_schema(self) -> Dict[str, Any]:
+        return {
+            "type": "object",
+            "properties": {
+                "group_name": {"type": "string", "description": "Node group name."},
+                "description": {"type": "string", "description": "Description."}
+            },
+            "required": ["group_name"]
+        }
+        
+    def execute(self, arguments: Dict[str, Any]) -> str:
+        cmd = f"DEFINE NODEGROUP {arguments['group_name']}"
+        if arguments.get("description"):
+            cmd += f" DESCRIPTION=\"{arguments['description']}\""
+        return self._execute_simple_query(cmd)
+
+class UpdateNodeGroup(BaseCommand):
+    @property
+    def name(self) -> str:
+        return "update_node_group"
+    @property
+    def description(self) -> str:
+        return (
+            "Updates an existing **Client Group** (Node Group).\n"
+            "**Input Parameters**:\n"
+            "- group_name (Required): The name of the client group to update.\n"
+            "- description (Optional): The new description for the group.\n"
+            "**Output Parameters**:\n"
+            "- Result: Success message indicating the group was updated."
+        )
+    @property
+    def args_schema(self) -> Dict[str, Any]:
+        return {
+            "type": "object",
+            "properties": {
+                "group_name": {"type": "string", "description": "Group name."},
+                "description": {"type": "string", "description": "Description."}
+            },
+            "required": ["group_name"]
+        }
+    def execute(self, arguments: Dict[str, Any]) -> str:
+        cmd = f"UPDATE NODEGROUP {arguments['group_name']}"
+        if arguments.get("description"): cmd += f" DESCRIPTION=\"{arguments['description']}\""
+        return self._execute_simple_query(cmd)
+
+class RemoveClientFromGroup(BaseCommand):
+    @property
+    def name(self) -> str:
+        return "remove_client_from_group"
+    @property
+    def description(self) -> str:
+        return (
+            "Removes a **Client** (Node) from a **Client Group** (Node Group).\n"
+            "**Input Parameters**:\n"
+            "- group_name (Required): The name of the Client Group.\n"
+            "- client_name (Required): The name of the Client to remove from the group.\n"
+            "**Output Parameters**:\n"
+            "- Result: Success message indicating the Client was removed from the group."
+        )
+    @property
+    def args_schema(self) -> Dict[str, Any]:
+        return {
+            "type": "object",
+            "properties": {
+                "group_name": {"type": "string", "description": "Group name."},
+                "client_name": {"type": "string", "description": "Client name."}
+            },
+            "required": ["group_name", "client_name"]
+        }
+    def execute(self, arguments: Dict[str, Any]) -> str:
+        return self._execute_simple_query(f"REMOVE NODE {arguments['group_name']} {arguments['client_name']}")
+
+class DeleteNodeGroup(BaseCommand):
+    @property
+    def name(self) -> str:
+        return "delete_node_group"
+    @property
+    def description(self) -> str:
+        return (
+            "Deletes a **Client Group** (Node Group).\n"
+            "**Input Parameters**:\n"
+            "- group_name (Required): The name of the group to delete.\n"
+            "**Output Parameters**:\n"
+            "- Result: Success message indicating the group was deleted."
+        )
+    @property
+    def args_schema(self) -> Dict[str, Any]:
+        return {
+            "type": "object",
+            "properties": {
+                "group_name": {"type": "string", "description": "Group name."}
+            },
+            "required": ["group_name"]
+        }
+    def execute(self, arguments: Dict[str, Any]) -> str:
+        return self._execute_simple_query(f"DELETE NODEGROUP {arguments['group_name']}")
+
+class QueryClientGroup(BaseCommand):
+    @property
+    def name(self) -> str:
+        return "query_client_group"
+
+    @property
+    def description(self) -> str:
+        return (
+            "Query definitions of client groups (node groups).\n\n"
+            "**Input Parameters**:\n"
+            "- group_name (Optional): Name of the client group.\n\n"
+            "**Output Parameters**:\n"
+            "- Group Name: Name of the client group.\n"
+            "- Description: Description of the group."
+        )
+
+    @property
+    def args_schema(self) -> Dict[str, Any]:
+        return {
+            "type": "object",
+            "properties": {
+                "group_name": {"type": "string", "description": "Name of the client group."}
+            }
+        }
+
+    def execute(self, arguments: Dict[str, Any]) -> str:
+        cmd = "QUERY NODEGROUP"
+        if arguments.get("group_name"):
+            cmd += f" {arguments['group_name']}"
+        return self._execute_simple_query(cmd)
