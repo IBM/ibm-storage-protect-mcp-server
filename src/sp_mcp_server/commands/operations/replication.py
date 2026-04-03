@@ -62,11 +62,12 @@ class QueryReplicationStatus(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query active client replication processes.\n\n"
+            "Query active node replication processes.\n\n"
             "**Input Parameters**:\n"
-            "- client_name (Optional): Client name to filter.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- node_name (Optional): Node name to filter.\n\n"
             "**Output Parameters**:\n"
-            "- Client Name: Client being replicated.\n"
+            "- Node Name: Node being replicated.\n"
             "- Bytes Replicated: Data moved.\n"
             "- Status: Current activity."
         )
@@ -76,14 +77,16 @@ class QueryReplicationStatus(BaseCommand):
         return {
             "type": "object",
             "properties": {
-                "client_name": {"type": "string", "description": "Client name. (maps to node_name)"}
+                "isp_server_name": {"type": "string", "description": "Target ISP Server name from registry (optional)."},
+
+                "node_name": {"type": "string", "description": "Node name."}
             }
         }
 
     def execute(self, arguments: Dict[str, Any]) -> str:
         cmd = "QUERY REPLICATION"
-        if arguments.get("client_name"):
-            cmd += f" {arguments['client_name']}"
+        if arguments.get("node_name"):
+            cmd += f" {arguments['node_name']}"
         return self._execute_simple_query(cmd)
 
 class QueryReplicationRule(BaseCommand):

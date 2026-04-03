@@ -9,11 +9,11 @@ class DefineManagementClass(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Retention Policy** (known as a **Management Class** in SP). Determines how files are managed/retained.\n"
+            "Defines a **Management Class** (policy object within a Policy Set). A management class is the binding point users apply to individual files or objects to specify how they are managed; it contains one or more Copy Groups that define versioning and retention behavior.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
-            "- policy_set_name (Required): Parent Policy Profile.\n"
-            "- class_name (Required): Name for the Retention Policy.\n"
+            "- policy_set_name (Required): Parent Policy Set.\n"
+            "- class_name (Required): Name for the Management Class (policy object).\n"
             "- description (Optional): Description.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the policy was defined."
@@ -45,11 +45,11 @@ class UpdateManagementClass(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates a **Retention Policy** (Management Class) description.\n"
+            "Updates a **Management Class** (policy object) description.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): The parent Policy Domain.\n"
-            "- policy_set_name (Required): The parent Policy Profile (Set).\n"
-            "- class_name (Required): The name of the Retention Policy (Management Class).\n"
+            "- policy_set_name (Required): The parent Policy Set.\n"
+            "- class_name (Required): The name of the Management Class (policy object).\n"
             "- description (Optional): The new description.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the management class was updated."
@@ -78,10 +78,10 @@ class DeleteManagementClass(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Retention Policy** (Management Class).\n"
+            "Deletes a **Management Class** (policy object).\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
-            "- policy_set_name (Required): Parent Policy Profile.\n"
+            "- policy_set_name (Required): Parent Policy Set.\n"
             "- class_name (Required): Name of the Management Class to delete.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the management class was deleted."
@@ -108,11 +108,12 @@ class QueryProtectionPolicy(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Queries **Retention Policies** (Management Classes). Defines specific file management behaviors (e.g., standard backup vs long-term archive).\n"
+            "Queries **Management Classes**. Returns management-class objects that are used to bind policies to files and reference Copy Groups.\n"
             "**Input Parameters**:\n"
-            "- policy_group (Optional): Parent domain.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- domain_name (Optional): Parent Policy Domain. (historically `policy_group`)\n"
             "- policy_set (Optional): Parent profile.\n"
-            "- policy_name (Optional): Specific Retention Policy name.\n"
+            "- policy_name (Optional): Specific Management Class name.\n"
             "**Output Parameters**:\n"
             "- Policy Domain: Parent domain.\n"
             "- Policy Set: Parent profile.\n"
@@ -125,7 +126,9 @@ class QueryProtectionPolicy(BaseCommand):
         return {
             "type": "object",
             "properties": {
-                "policy_group": {"type": "string", "description": "Policy group name."},
+                "isp_server_name": {"type": "string", "description": "Target ISP Server name from registry (optional)."},
+
+                "domain_name": {"type": "string", "description": "Parent Policy Domain."},
                 "policy_set": {"type": "string", "description": "Policy set name."},
                 "policy_name": {"type": "string", "description": "Protection policy/Management class name."}
             }
@@ -133,8 +136,8 @@ class QueryProtectionPolicy(BaseCommand):
 
     def execute(self, arguments: Dict[str, Any]) -> str:
         cmd = "QUERY MGMTCLASS"
-        if arguments.get("policy_group"):
-            cmd += f" {arguments['policy_group']}"
+        if arguments.get("domain_name"):
+            cmd += f" {arguments['domain_name']}"
         if arguments.get("policy_set"):
             cmd += f" {arguments['policy_set']}"
         if arguments.get("policy_name"):

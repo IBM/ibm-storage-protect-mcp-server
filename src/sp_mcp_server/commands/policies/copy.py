@@ -9,13 +9,13 @@ class DefineCopyGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Copy Rule** (known as a **Copy Group** in SP) that specifies exact retention parameters (e.g., how many versions to keep).\n"
+            "Defines a **Copy Group** that specifies exact retention parameters (e.g., how many versions to keep).\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
-            "- policy_set_name (Required): Parent Policy Profile.\n"
-            "- class_name (Required): Parent Retention Policy.\n"
+            "- policy_set_name (Required): Parent Policy Set.\n"
+            "- class_name (Required): Parent Management Class.\n"
             "- type (Required): 'BACKUP' or 'ARCHIVE' (Defaults to BACKUP).\n"
-            "- destination (Required): The **Storage Target** (Pool) where data will be stored.\n"
+            "- destination (Required): The **Storage Pool** where data will be stored.\n"
             "- verexists (Optional): Max versions to retain while file exists on client.\n"
             "- verdeleted (Optional): Max versions to retain after file is deleted on client.\n"
             "- retextra (Optional): Days to retain inactive versions.\n"
@@ -61,13 +61,13 @@ class UpdateCopyGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates a **Copy Rule** (Copy Group) to modify retention parameters.\n"
+            "Updates a **Copy Group** to modify retention parameters.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
-            "- policy_set_name (Required): Parent Policy Profile.\n"
-            "- class_name (Required): Parent Retention Policy.\n"
+            "- policy_set_name (Required): Parent Policy Set.\n"
+            "- class_name (Required): Parent Management Class.\n"
             "- type (Optional): 'BACKUP' or 'ARCHIVE' (Defaults to BACKUP).\n"
-            "- destination (Optional): New Storage Target.\n"
+            "- destination (Optional): New Storage Pool.\n"
             "- verexists (Optional): Update max versions retained while file exists.\n"
             "- verdeleted (Optional): Update max versions retained after file is deleted.\n"
             "- retextra (Optional): Update retention days for inactive versions.\n"
@@ -108,11 +108,11 @@ class DeleteCopyGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Copy Rule** (Copy Group). This removes specific retention settings from a management class.\n"
+            "Deletes a **Copy Group**. This removes specific retention settings from a management class.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
-            "- policy_set_name (Required): Parent Policy Profile.\n"
-            "- class_name (Required): Parent Retention Policy.\n"
+            "- policy_set_name (Required): Parent Policy Set.\n"
+            "- class_name (Required): Parent Management Class.\n"
             "- type (Optional): 'BACKUP' or 'ARCHIVE' (Defaults to BACKUP).\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the rule was deleted."
@@ -140,11 +140,11 @@ class QueryRetentionRuleConfig(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Queries **Copy Rules** (Retention Rules/Copy Groups). Shows exact numeric values for retention limits.\n"
+            "Queries **Copy Groups**. Shows exact numeric values for retention limits.\n"
             "**Input Parameters**:\n"
             "- policy_group (Optional): Parent domain.\n"
             "- policy_set (Optional): Parent profile.\n"
-            "- policy_name (Optional): Parent Retention Policy.\n"
+            "- policy_name (Optional): Parent Management Class.\n"
             "**Output Parameters**:\n"
             "- Mgmt Class Name: Parent policy.\n"
             "- Copy Group Name: Rule identifier.\n"
@@ -213,7 +213,7 @@ class QueryRetentionRule(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query retention rules that define how long retention sets are kept.\n\n"
+            "Query Copy Groups that define how long retention sets are kept.\n\n"
             "**Input Parameters**:\n"
             "- rule_name (Optional): Rule name.\n\n"
             "**Output Parameters**:\n"

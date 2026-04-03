@@ -9,7 +9,7 @@ class DefinePolicyDomain(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a new **Policy Domain** (SLA). a logical grouping of clients with similar backup requirements.\n"
+            "Defines a new **Policy Domain** (SLA). A logical grouping of nodes with similar backup requirements.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Unique name for the Policy Domain.\n"
             "- description (Optional): Description of the domain's purpose.\n"
@@ -99,7 +99,7 @@ class DeletePolicyDomain(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Policy Domain** (SLA). Use carefully as it can impact all assigned clients.\n"
+            "Deletes a **Policy Domain** (SLA). Use carefully as it can impact all assigned nodes.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Name of the domain to delete.\n"
             "**Output Parameters**:\n"
@@ -125,12 +125,13 @@ class QueryPolicyGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Queries **Policy Domains** (Policy Groups). Defines distinct SLAs or business groups for clients.\n"
+            "Queries **Policy Domains**. Defines distinct SLAs or business groups for nodes.\n"
             "**Input Parameters**:\n"
-            "- policy_group (Optional): Specific domain name to query.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- domain_name (Optional): Specific Policy Domain name to query. (historically `policy_group` in code)\n"
             "**Output Parameters**:\n"
             "- Policy Domain Name: The domain identifier.\n"
-            "- Activated Policy Set: The currently active Policy Profile enforcing rules.\n"
+            "- Activated Policy Set: The currently active Policy Set enforcing rules.\n"
             "- Description: Domain description."
         )
 
@@ -139,14 +140,16 @@ class QueryPolicyGroup(BaseCommand):
         return {
             "type": "object",
             "properties": {
-                "policy_group": {"type": "string", "description": "Name of the policy group/domain. (maps to domain_name)"}
+                "isp_server_name": {"type": "string", "description": "Target ISP Server name from registry (optional)."},
+
+                "domain_name": {"type": "string", "description": "Specific Policy Domain name to query."}
             }
         }
 
     def execute(self, arguments: Dict[str, Any]) -> str:
         cmd = "QUERY DOMAIN"
-        if arguments.get("policy_group"):
-            cmd += f" {arguments['policy_group']}"
+        if arguments.get("domain_name"):
+            cmd += f" {arguments['domain_name']}"
         return self._execute_simple_query(cmd)
 
 class QueryLegalHold(BaseCommand):
@@ -157,7 +160,7 @@ class QueryLegalHold(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query active legal holds prevents deletion of data regardless of retention policy.\n\n"
+            "Query active legal holds prevents deletion of data regardless of retention rules.\n\n"
             "**Input Parameters**:\n"
             "- hold_name (Optional): Name of the hold.\n\n"
             "**Output Parameters**:\n"

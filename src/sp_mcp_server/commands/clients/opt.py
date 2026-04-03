@@ -9,7 +9,7 @@ class DefineClientOptSet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Client Configuration Profile** (known as a **Client Option Set** in SP). This profile contains a set of rules (like include/exclude filters) that can be applied to Clients.\n"
+            "Defines a **Client Option Set**. This profile contains a set of rules (like include/exclude filters) that can be applied to nodes.\n"
             "**Input Parameters**:\n"
             "- option_set_name (Required): Unique name for the configuration profile.\n"
             "- description (Optional): Description of the profile's purpose.\n"
@@ -42,7 +42,7 @@ class DefineClientOpt(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Adds a specific configuration rule (Option) to a **Client Configuration Profile** (Client Option Set). For example, adding an 'INCLUDE' or 'EXCLUDE' rule.\n"
+            "Adds a specific configuration rule (Option) to a **Client Option Set**. For example, adding an 'INCLUDE' or 'EXCLUDE' rule.\n"
             "**Input Parameters**:\n"
             "- option_set_name (Required): Name of the profile to modify.\n"
             "- option_name (Required): The setting name (e.g., 'DIRMC', 'INCLUDE', 'EXCLUDE').\n"
@@ -82,7 +82,7 @@ class UpdateClientOptSet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates the description of a **Client Configuration Profile** (Option Set).\n"
+            "Updates the description of a **Client Option Set**.\n"
             "**Input Parameters**:\n"
             "- option_set_name (Required): The name of the option set.\n"
             "- description (Optional): The new description.\n"
@@ -230,7 +230,7 @@ class QueryClientOptionSet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query client option sets, which centralize client configuration.\n\n"
+            "Query **Client Option Sets**, which centralize node configuration.\n\n"
             "**Input Parameters**:\n"
             "- option_set (Optional): Name of the option set.\n\n"
             "**Output Parameters**:\n"

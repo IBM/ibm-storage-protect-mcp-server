@@ -9,17 +9,18 @@ class DefineStoragePool(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a new **Storage Target** (known as a **Storage Pool** in SP). This is a named resource consisting of multiple storage units (volumes) where backup data is stored.\n"
+            "Defines a new **Storage Pool**. This is a named resource consisting of multiple storage units (volumes) where backup data is stored.\n"
             "**Input Parameters**:\n"
-            "- pool_name (Required): Name for the new Storage Target.\n"
-            "- device_class_name (Required): The **Device Type Config** (Device Class) determining the hardware type (e.g., LTO, DISK).\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- pool_name (Required): Name for the new Storage Pool.\n"
+            "- device_class_name (Required): The **Device Class** determining the hardware type (e.g., LTO, DISK).\n"
             "- pool_type (Optional): The function of the pool ('PRIMARY', 'COPY', 'ACTIVE', 'CONTAINER').\n"
-            "- description (Optional): Description of the target.\n"
+            "- description (Optional): Description of the pool.\n"
             "- max_scratch (Optional): Maximum number of scratch volumes allowed.\n"
             "- reclaim (Optional): Threshold percentage to trigger space reclamation.\n"
             "- collocate (Optional): Collocation setting to group data (e.g., by Node or Group).\n"
             "**Output Parameters**:\n"
-            "- Result: Success message indicating the Storage Target was defined."
+            "- Result: Success message indicating the Storage Pool was defined."
         )
 
     @property
@@ -70,9 +71,10 @@ class DefineStoragePoolDirectory(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Adds a filesystem directory to a **Container Storage Target** (Storage Pool Directory) for deduplicated data storage.\n"
+            "Adds a filesystem directory to a **Container Storage Pool** for deduplicated data storage.\n"
             "**Input Parameters**:\n"
-            "- pool_name (Required): The name of the Container Storage Target.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- pool_name (Required): The name of the Container Storage Pool.\n"
             "- directory (Required): The absolute filesystem path to add.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the directory was added."

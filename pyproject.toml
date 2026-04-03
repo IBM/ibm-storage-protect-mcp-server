@@ -1,12 +1,48 @@
 [project]
 name = "ibm-sp-mcp-server"
 version = "0.1.0"
-description = "MCP Server for IBM Storage Protect"
+description = "MCP Server for IBM Storage Protect - AI-powered administration and automation"
+readme = "README.md"
 requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [
+    {name = "IBM SP MCP Server Contributors"}
+]
+keywords = [
+    "mcp",
+    "model-context-protocol",
+    "ibm",
+    "storage-protect",
+    "backup",
+    "automation",
+    "ai-assistant"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: System :: Archiving :: Backup",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "mcp>=1.0.0",
-    "python-dotenv>=1.0.0"
+    "python-dotenv>=1.0.0",
+    "openai>=1.0.0",
+    "keyring>=24.0.0"
 ]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/sp-mcp-server"
+Documentation = "https://github.com/yourusername/sp-mcp-server/tree/main/docs"
+Repository = "https://github.com/yourusername/sp-mcp-server"
+Issues = "https://github.com/yourusername/sp-mcp-server/issues"
 
 [project.scripts]
 sp-mcp-server = "sp_mcp_server.main:main"
@@ -25,12 +61,30 @@ mcp-server-ops-rules = "sp_mcp_server.main_ops_rules:main"
 
 [project.optional-dependencies]
 test = [
-  "pytest",
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+sse = [
+    "mcp[sse]",
+    "starlette>=0.27.0",
+    "uvicorn>=0.23.0",
 ]
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
-[tool.hatch.build.targets.wheel]
-packages = ["src/sp_mcp_server"]
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["sp_mcp_server*"]
+exclude = ["tests*"]

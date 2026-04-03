@@ -8,9 +8,10 @@ class DefineBackupSet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Define a **Backup Set** from existing backup versions on the server. Backup sets are portable collections of client data.\n"
+            "Define a **Backup Set** from existing backup versions on the server. Backup sets are portable collections of node data.\n"
             "**Input Parameters**:\n"
-            "- node_name (Required): The client node name.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- node_name (Required): The node name.\n"
             "- backup_set_name (Required): The name of the new backup set.\n"
             "- file_space_name (Optional): Specific file space to include.\n"
             "**Output Parameters**:\n"
@@ -41,7 +42,8 @@ class UpdateBackupSet(BaseCommand):
         return (
             "Updates the retention rule for a **Backup Set**.\n"
             "**Input Parameters**:\n"
-            "- node_name (Required): The client node name.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- node_name (Required): The node name.\n"
             "- backup_set_name (Required): The backup set name.\n"
             "- retention (Required): New retention period in days or NOLIMIT.\n"
             "**Output Parameters**:\n"
@@ -70,7 +72,8 @@ class DeleteBackupSet(BaseCommand):
         return (
             "Deletes a **Backup Set**.\n"
             "**Input Parameters**:\n"
-            "- node_name (Required): The client node name.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- node_name (Required): The node name.\n"
             "- backup_set_name (Required): The backup set name.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the backup set was deleted."

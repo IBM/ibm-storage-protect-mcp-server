@@ -8,7 +8,7 @@ class DefineMachine(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Define a **Machine** (Client) manually, declaring its existence to the server.\n"
+            "Define a **Machine** (Node) manually, declaring its existence to the server.\n"
             "**Input Parameters**:\n"
             "- machine_name (Required): The name of the machine to define.\n"
             "- description (Optional): Description of the machine.\n"
@@ -40,7 +40,7 @@ class UpdateMachine(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates properties of a registered **Machine** (Client).\n"
+            "Updates properties of a registered **Machine** (Node).\n"
             "**Input Parameters**:\n"
             "- machine_name (Required): The name of the machine.\n"
             "- description (Optional): New description for the machine.\n"

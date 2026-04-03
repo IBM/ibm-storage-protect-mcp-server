@@ -8,9 +8,10 @@ class DefineClientAction(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Define a **Client Action** (one-time schedule). Forces a client operation (e.g., backup) immediately or shortly.\n"
+            "Define a **Node Action** (one-time schedule). Forces a node operation (e.g., backup) immediately or shortly.\n"
             "**Input Parameters**:\n"
-            "- node_name (Required): The client node name (or * for all).\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- node_name (Required): The node name (or * for all).\n"
             "- action (Required): The action to perform (e.g., INCREMENTAL).\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the action was scheduled."

@@ -9,7 +9,7 @@ class DefineDataMover(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Data Transfer Agent** (known as a **Data Mover** in SP). Used for operations like NDMP backups (NAS).\n"
+            "Defines a **Data Mover**. Used for operations like NDMP backups (NAS).\n"
             "**Input Parameters**:\n"
             "- name (Required): Unique name for the Data Mover.\n"
             "- type (Required): The protocol type (e.g., 'NAS').\n"
@@ -51,7 +51,8 @@ class UpdateDataMover(BaseCommand):
         return (
             "Updates a **Data Mover** configuration.\n"
             "**Input Parameters**:\n"
-            "- mover_name (Required): The data mover name.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- name (Required): The data mover name.\n"
             "- type (Optional): The new type (e.g., NAS).\n"
             "- user_id (Optional): The user ID for authentication.\n"
             "- password (Optional): The password for authentication.\n"
@@ -88,7 +89,8 @@ class DeleteDataMover(BaseCommand):
         return (
             "Deletes a **Data Mover** definition.\n"
             "**Input Parameters**:\n"
-            "- mover_name (Required): The name of the data mover to delete.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- name (Required): The name of the data mover to delete.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the data mover was deleted."
         )

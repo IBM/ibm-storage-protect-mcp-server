@@ -9,9 +9,10 @@ class DefineNodeGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Client Group** (known as a **Node Group** in SP). Groups allow you to manage multiple Clients collectively.\n"
+            "Defines a **Node Group**. Groups allow you to manage multiple nodes collectively.\n"
             "**Input Parameters**:\n"
-            "- group_name (Required): Name of the new Client Group.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- group_name (Required): Name of the new Node Group.\n"
             "- description (Optional): Description of the group.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the group was defined."
@@ -41,9 +42,10 @@ class UpdateNodeGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates an existing **Client Group** (Node Group).\n"
+            "Updates an existing **Node Group**.\n"
             "**Input Parameters**:\n"
-            "- group_name (Required): The name of the client group to update.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- group_name (Required): The name of the node group to update.\n"
             "- description (Optional): The new description for the group.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the group was updated."
@@ -70,12 +72,13 @@ class RemoveClientFromGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Removes a **Client** (Node) from a **Client Group** (Node Group).\n"
+            "Removes a **Node** from a **Node Group**.\n"
             "**Input Parameters**:\n"
-            "- group_name (Required): The name of the Client Group.\n"
-            "- client_name (Required): The name of the Client to remove from the group.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- group_name (Required): The name of the Node Group.\n"
+            "- node_name (Required): The name of the Node to remove from the group.\n"
             "**Output Parameters**:\n"
-            "- Result: Success message indicating the Client was removed from the group."
+            "- Result: Success message indicating the Node was removed from the group."
         )
     @property
     def args_schema(self) -> Dict[str, Any]:
@@ -83,12 +86,12 @@ class RemoveClientFromGroup(BaseCommand):
             "type": "object",
             "properties": {
                 "group_name": {"type": "string", "description": "Group name."},
-                "client_name": {"type": "string", "description": "Client name."}
+                "node_name": {"type": "string", "description": "Node name."}
             },
-            "required": ["group_name", "client_name"]
+            "required": ["group_name", "node_name"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        return self._execute_simple_query(f"REMOVE NODE {arguments['group_name']} {arguments['client_name']}")
+        return self._execute_simple_query(f"REMOVE NODE {arguments['group_name']} {arguments['node_name']}")
 
 class DeleteNodeGroup(BaseCommand):
     @property

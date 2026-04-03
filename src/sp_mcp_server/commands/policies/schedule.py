@@ -9,7 +9,7 @@ class DefineSchedule(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Job Schedule** (known as a **Client Schedule** in SP) to automate backup tasks.\n"
+            "Defines a **Client Schedule** to automate backup tasks.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
             "- schedule_name (Required): Name for the Schedule.\n"
@@ -55,7 +55,7 @@ class UpdateSchedule(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates a **Job Schedule** (Client Schedule).\n"
+            "Updates a **Client Schedule**.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): The Policy Domain.\n"
             "- schedule_name (Required): The Schedule name.\n"
@@ -92,7 +92,7 @@ class DeleteSchedule(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Job Schedule** (Client Schedule).\n"
+            "Deletes a **Client Schedule**.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
             "- schedule_name (Required): Name of the schedule to delete.\n"
@@ -123,7 +123,7 @@ class QuerySchedule(BaseCommand):
             "Display information about administrative and client data protection schedules.\n\n"
             "**Input Parameters**:\n"
             "- schedule_name (Optional): Name of the schedule.\n"
-            "- policy_group (Optional): Policy group for client schedules.\n"
+            "- domain_name (Optional): Policy Domain for client schedules. (historically `policy_group`)\n"
             "- type (Optional): Type of schedule (admin or client).\n\n"
             "**Output Parameters**:\n"
             "- Schedule Name: Name of the schedule.\n"
@@ -138,15 +138,15 @@ class QuerySchedule(BaseCommand):
             "type": "object",
             "properties": {
                 "schedule_name": {"type": "string", "description": "Name of the schedule"},
-                "policy_group": {"type": "string", "description": "Policy group for client schedules (maps to domain_name)."},
+                "domain_name": {"type": "string", "description": "Policy Domain for client schedules."},
                 "type": {"type": "string", "enum": ["admin", "client"], "description": "Type of schedule"}
             }
         }
 
     def execute(self, arguments: Dict[str, Any]) -> str:
         cmd = "QUERY SCHEDULE"
-        if arguments.get("policy_group"):
-            cmd += f" {arguments['policy_group']}"
+        if arguments.get("domain_name"):
+            cmd += f" {arguments['domain_name']}"
         if arguments.get("schedule_name"):
             cmd += f" {arguments['schedule_name']}"
         
@@ -218,14 +218,15 @@ class QueryScheduleAssociation(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display associations between client nodes and schedules.\n\n"
+            "Display associations between nodes and schedules.\n\n"
             "**Input Parameters**:\n"
-            "- policy_group (Optional): Policy group.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- domain_name (Optional): Policy Domain. (historically `policy_group`)\n"
             "- schedule_name (Optional): Schedule name.\n"
-            "- client_name (Optional): Client name.\n\n"
+            "- node_name (Optional): Node name.\n\n"
             "**Output Parameters**:\n"
             "- Schedule Name: The schedule.\n"
-            "- Client Name: The associated node."
+            "- Node Name: The associated node."
         )
 
     @property
@@ -233,18 +234,20 @@ class QueryScheduleAssociation(BaseCommand):
         return {
              "type": "object",
              "properties": {
-                 "policy_group": {"type": "string", "description": "Policy group (maps to domain_name)."},
+                "isp_server_name": {"type": "string", "description": "Target ISP Server name from registry (optional)."},
+
+                 "domain_name": {"type": "string", "description": "Policy Domain."},
                  "schedule_name": {"type": "string", "description": "Schedule name."},
-                 "client_name": {"type": "string", "description": "Client name (maps to node_name)."}
+                 "node_name": {"type": "string", "description": "Node name."}
              }
         }
 
     def execute(self, arguments: Dict[str, Any]) -> str:
         cmd = "QUERY ASSOCIATION"
-        if arguments.get("policy_group"):
-            cmd += f" {arguments['policy_group']}"
+        if arguments.get("domain_name"):
+            cmd += f" {arguments['domain_name']}"
         if arguments.get("schedule_name"):
             cmd += f" {arguments['schedule_name']}"
-        if arguments.get("client_name"):
-            cmd += f" {arguments['client_name']}"
+        if arguments.get("node_name"):
+            cmd += f" {arguments['node_name']}"
         return self._execute_simple_query(cmd)

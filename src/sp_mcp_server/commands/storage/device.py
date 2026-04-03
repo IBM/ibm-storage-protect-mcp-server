@@ -9,7 +9,7 @@ class DefineDeviceClass(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Device Type Config** (known as a **Device Class** in SP). Specifies the hardware type and management policies for storage devices.\n"
+            "Defines a **Device Class**. Specifies the hardware type and management policies for storage devices.\n"
             "**Input Parameters**:\n"
             "- device_class_name (Required): Name for the Device Class.\n"
             "- dev_type (Required): The underlying technology (e.g., 'LTO', 'DISK', 'FILE').\n"
@@ -49,7 +49,8 @@ class UpdateDeviceClass(BaseCommand):
         return (
             "Updates a **Device Class** definition.\n"
             "**Input Parameters**:\n"
-            "- devclass_name (Required): The device class name.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- device_class_name (Required): The device class name.\n"
             "- mount_limit (Optional): Max number of mounts allowed (DRIVES or number).\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the device class was updated."
@@ -78,7 +79,8 @@ class DeleteDeviceClass(BaseCommand):
         return (
             "Deletes a **Device Class** definition.\n"
             "**Input Parameters**:\n"
-            "- devclass_name (Required): The name of the device class to delete.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- device_class_name (Required): The name of the device class to delete.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the device class was deleted."
         )

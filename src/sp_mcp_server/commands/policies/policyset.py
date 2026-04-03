@@ -9,10 +9,10 @@ class DefinePolicySet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Policy Profile** (known as a **Policy Set** in SP) within a domain. Contains a collection of retention policies that can be activated together.\n"
+            "Defines a **Policy Set** within a domain. Contains a collection of management classes that can be activated together.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): The parent Policy Domain.\n"
-            "- policy_set_name (Required): Name for the new Policy Profile.\n"
+            "- policy_set_name (Required): Name for the new Policy Set.\n"
             "- description (Optional): Description.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the profile was defined."
@@ -43,10 +43,10 @@ class UpdatePolicySet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates an existing **Policy Profile** (Policy Set) description.\n"
+            "Updates an existing **Policy Set** description.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): The parent Policy Domain.\n"
-            "- policy_set_name (Required): The name of the Policy Profile (Set) to update.\n"
+            "- policy_set_name (Required): The name of the Policy Set to update.\n"
             "- description (Optional): The new description.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the policy set was updated."
@@ -74,10 +74,10 @@ class ActivatePolicySet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Activates a **Policy Profile** (Policy Set). This makes the policy set the effective policy for the domain, applying retention and management rules.\n"
+            "Activates a **Policy Set**. This makes the policy set the effective policy for the domain, applying retention and management rules.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): The name of the policy domain.\n"
-            "- profile_name (Required): The name of the policy profile (set) to activate.\n"
+            "- profile_name (Required): The name of the Policy Set to activate.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the policy set was activated."
         )
@@ -101,10 +101,10 @@ class ValidatePolicySet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Validates the consistency and completeness of a **Policy Profile** (Policy Set) before deployment.\n"
+            "Validates the consistency and completeness of a **Policy Set** before deployment.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): The name of the policy domain.\n"
-            "- profile_name (Required): The name of the policy profile (set) to validate.\n"
+            "- profile_name (Required): The name of the Policy Set to validate.\n"
             "**Output Parameters**:\n"
             "- Result: Success message or list of validation errors."
         )
@@ -128,10 +128,10 @@ class DeletePolicySet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Policy Profile** (Policy Set).\n"
+            "Deletes a **Policy Set**.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
-            "- policy_set_name (Required): Name of the Policy Profile to delete.\n"
+            "- policy_set_name (Required): Name of the Policy Set to delete.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the policy set was deleted."
         )
@@ -156,7 +156,7 @@ class QueryPolicySet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Queries **Policy Profiles** (Policy Sets). A collection of policies that can be validated and activated.\n"
+            "Queries **Policy Sets**. A collection of policy sets that can be validated and activated.\n"
             "**Input Parameters**:\n"
             "- policy_group (Optional): Parent Policy Domain.\n"
             "- policy_set (Optional): Specific profile name.\n"
