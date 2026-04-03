@@ -9,12 +9,12 @@ class QueryActiveSession(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display information about currently active administrative and client sessions.\n\n"
+            "Display information about currently active administrative and node sessions.\n\n"
             "**Input Parameters**:\n"
             "- session_id (Optional): Specific session ID to query.\n\n"
             "**Output Parameters**:\n"
             "- Session ID: Unique identifier for the session.\n"
-            "- Client Name: Name of the connected client/admin.\n"
+            "- Node Name: Name of the connected node/admin.\n"
             "- State: Current activity state (e.g., Run, Idle).\n"
             "- Bytes Sent/Recv: Amount of data transferred.\n"
             "- Wait Time: Time spent waiting for media."
@@ -43,12 +43,13 @@ class QueryDataOccupancy(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display statistics on where client data is stored and how much space it occupies.\n\n"
+            "Display statistics on where node data is stored and how much space it occupies.\n\n"
             "**Input Parameters**:\n"
-            "- client_name (Optional): Client name to filter.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Optional): Node name to filter.\n"
             "- backup_volume (Optional): Specific backup volume/filespace name.\n\n"
             "**Output Parameters**:\n"
-            "- Client Name: The client.\n"
+            "- Node Name: The node.\n"
             "- Backup Volume Type: Specific file space or workload.\n"
             "- Storage Pool: Where the data resides.\n"
             "- Files: Number of files stored.\n"
@@ -81,11 +82,12 @@ class QueryAuditDataOccupancy(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query calculated total storage utilization for a client for audit purposes.\n\n"
+            "Query calculated total storage utilization for a node for audit purposes.\n\n"
             "**Input Parameters**:\n"
-            "- client_name (Optional): Client name to filter.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Optional): Node name to filter.\n\n"
             "**Output Parameters**:\n"
-            "- Client Name: The client.\n"
+            "- Node Name: The node.\n"
             "- Backup Data: Space used by backup data.\n"
             "- Archive Data: Space used by archive data.\n"
             "- Total Space: Total space utilized."
@@ -114,13 +116,13 @@ class QueryClientBackupVolume(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query information about client backup volumes (File Spaces). "
-            "A backup volume represents a logical partition of data managed for a client (e.g., C: drive, /home, System State).\n\n"
+            "Query information about node backup volumes (File Spaces). A backup volume represents a logical partition of data managed for a node (e.g., C: drive, /home, System State).\n\n"
             "**Input Parameters**:\n"
-            "- client_name (Optional): Client name.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Optional): Node name.\n"
             "- backup_volume (Optional): Backup volume/filespace name.\n\n"
             "**Output Parameters**:\n"
-            "- Client Name: The client.\n"
+            "- Node Name: The node.\n"
             "- Backup Volume (File Space): The specific volume or mount point.\n"
             "- Capacity: Total size of the volume on the client.\n"
             "- Pct Utilized: Percentage used on the client."
@@ -152,12 +154,13 @@ class QueryVirtualMountPoint(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query virtual mount point mappings, which map local paths to virtual filespaces.\n\n"
+            "Query virtual mount point mappings for nodes, which map local paths to virtual filespaces.\n\n"
             "**Input Parameters**:\n"
-            "- client_name (Optional): Client name.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Optional): Node name.\n"
             "- virtual_path (Optional): Virtual mount point name.\n\n"
             "**Output Parameters**:\n"
-            "- Client Name: The client.\n"
+            "- Node Name: The node.\n"
             "- Virtual Mount Point: Name of the virtual filespace.\n"
             "- Local Path: The physical path mapped."
         )
@@ -188,12 +191,13 @@ class QueryClientDataPlacement(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query distribution of client data across storage containers and volumes.\n\n"
+            "Query distribution of node data across storage containers and volumes.\n\n"
             "**Input Parameters**:\n"
-            "- client_name (Optional): Client name.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Optional): Node name.\n"
             "- storage_container (Optional): Storage container name.\n\n"
             "**Output Parameters**:\n"
-            "- Client Name: The client.\n"
+            "- Node Name: The node.\n"
             "- Storage Pool: The container.\n"
             "- Volume Name: The specific volume."
         )

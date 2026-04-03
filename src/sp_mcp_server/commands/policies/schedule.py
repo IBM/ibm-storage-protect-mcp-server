@@ -55,7 +55,7 @@ class UpdateSchedule(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates a **Client Schedule**.\n"
+            "- Description: Updates a **Client Schedule**.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): The Policy Domain.\n"
             "- schedule_name (Required): The Schedule name.\n"
@@ -92,7 +92,7 @@ class DeleteSchedule(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Client Schedule**.\n"
+            "- Description: Deletes a **Client Schedule**.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
             "- schedule_name (Required): Name of the schedule to delete.\n"
@@ -218,12 +218,12 @@ class QueryScheduleAssociation(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display associations between nodes and schedules.\n\n"
+            "Display associations between client nodes and schedules.\n\n"
             "**Input Parameters**:\n"
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
             "- domain_name (Optional): Policy Domain. (historically `policy_group`)\n"
             "- schedule_name (Optional): Schedule name.\n"
-            "- node_name (Optional): Node name.\n\n"
+            "- client_name (Optional): Client/node name.\n\n"
             "**Output Parameters**:\n"
             "- Schedule Name: The schedule.\n"
             "- Node Name: The associated node."

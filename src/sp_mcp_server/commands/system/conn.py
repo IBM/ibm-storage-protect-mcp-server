@@ -9,13 +9,13 @@ class DefineConnection(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Define a **Cloud Connection** to a cloud service (e.g., S3, Azure).\n"
+            "- Description: Define a **Cloud Connection** to a cloud service (e.g., S3, Azure).\n\n"
             "**Input Parameters**:\n"
             "- connection_name (Required): Name of the connection.\n"
             "- cloud_type (Required): Type of cloud (S3, AZURE, GOOGLE, etc).\n"
             "- bucket_name (Required): Target bucket name.\n"
             "- identity (Required): User ID or Access Key ID.\n"
-            "- password (Required): Password or Secret Key.\n"
+            "- password (Required): Password or Secret Key.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the connection was defined."
         )
@@ -47,10 +47,10 @@ class UpdateConnection(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates a **Cloud Connection** configuration (typically password/key).\n"
+            "- Description: Updates a **Cloud Connection** configuration (typically password/key).\n\n"
             "**Input Parameters**:\n"
             "- connection_name (Required): The name of the connection.\n"
-            "- password (Optional): The new password or key for the cloud connection.\n"
+            "- password (Optional): The new password or key for the cloud connection.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the connection was updated."
         )
@@ -76,9 +76,10 @@ class DeleteConnection(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Cloud Connection** definition.\n"
+            "- Description: Deletes a **Cloud Connection** definition.\n\n"
             "**Input Parameters**:\n"
-            "- connection_name (Required): The name of the connection to delete.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- connection_name (Required): The name of the connection to delete.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the connection was deleted."
         )

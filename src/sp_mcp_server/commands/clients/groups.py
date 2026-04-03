@@ -9,10 +9,10 @@ class DefineNodeGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Node Group**. Groups allow you to manage multiple nodes collectively.\n"
+            "Defines a **Node Group** in SP. Groups allow you to manage multiple Nodes collectively.\n"
             "**Input Parameters**:\n"
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
-            "- group_name (Required): Name of the new Node Group.\n"
+            "- group_name (Required): Name of the new Client Group.\n"
             "- description (Optional): Description of the group.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the group was defined."
@@ -76,7 +76,7 @@ class RemoveClientFromGroup(BaseCommand):
             "**Input Parameters**:\n"
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
             "- group_name (Required): The name of the Node Group.\n"
-            "- node_name (Required): The name of the Node to remove from the group.\n"
+            "- client_name (Required): The name of the Node to remove from the group.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the Node was removed from the group."
         )
@@ -100,7 +100,7 @@ class DeleteNodeGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Client Group** (Node Group).\n"
+            "Deletes a **Node Group**.\n"
             "**Input Parameters**:\n"
             "- group_name (Required): The name of the group to delete.\n"
             "**Output Parameters**:\n"
@@ -126,11 +126,12 @@ class QueryClientGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query definitions of client groups (node groups).\n\n"
+            "Query definitions of node groups.\n\n"
             "**Input Parameters**:\n"
-            "- group_name (Optional): Name of the client group.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- group_name (Optional): Name of the node group.\n\n"
             "**Output Parameters**:\n"
-            "- Group Name: Name of the client group.\n"
+            "- Group Name: Name of the node group.\n"
             "- Description: Description of the group."
         )
 

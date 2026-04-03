@@ -9,11 +9,10 @@ class DefineScript(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Define an **Administrative Script** to automate server tasks.\n"
+            "- Description: Defines a new **Automation Script** based on a file's content.\n\n"
             "**Input Parameters**:\n"
             "- script_name (Required): Name of the script.\n"
-            "- description (Optional): Description of what the script does.\n"
-            "- line (Optional): Initial command line to add to the script.\n"
+            "- file_path (Required): Local file containing script commands.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the script was defined."
         )
@@ -45,11 +44,11 @@ class UpdateScript(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates an existing **Administrative Script**. You can change the description or append commands.\n"
+            "- Description: Updates an existing **Automation Script**.\n\n"
             "**Input Parameters**:\n"
-            "- script_name (Required): The name of the script to update.\n"
-            "- description (Optional): New description for the script.\n"
-            "- line (Optional): A command line to add or update in the script.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- script_name (Required): Name of the script.\n"
+            "- file_path (Optional): File with updated commands.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the script was updated."
         )
@@ -77,9 +76,10 @@ class DeleteScript(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes an **Administrative Script**.\n"
+            "- Description: Deletes an **Automation Script**.\n\n"
             "**Input Parameters**:\n"
-            "- script_name (Required): The name of the script to delete.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- script_name (Required): Name of the script.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the script was deleted."
         )
@@ -103,7 +103,7 @@ class QueryAutomationScript(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query defined automation scripts.\n\n"
+            "- Description: Query defined **Automation Scripts** on the server.\n\n"
             "**Input Parameters**:\n"
             "- script_name (Optional): Script name.\n\n"
             "**Output Parameters**:\n"

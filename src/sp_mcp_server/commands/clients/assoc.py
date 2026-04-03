@@ -9,11 +9,11 @@ class DefineAssociation(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Associates **Clients** (Nodes) with a **Schedule** to automate backup operations.\n"
+            "Associates **Nodes** with a **Schedule** to automate backup operations.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): The Policy Domain where the schedule exists.\n"
             "- schedule_name (Required): The name of the Schedule.\n"
-            "- node_names (Required): Space-separated list of Client names to associate.\n"
+            "- node_names (Required): Space-separated list of node names to associate.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the association was created."
         )
@@ -41,11 +41,11 @@ class DeleteAssociation(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Client Association** with a schedule.\n"
+            "Deletes a **Node Association** with a schedule.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Policy domain.\n"
             "- schedule_name (Required): Schedule name.\n"
-            "- node_names (Required): Client name(s) to disassociate.\n"
+            "- node_names (Required): Node name(s) to disassociate.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the association was deleted."
         )

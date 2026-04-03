@@ -8,10 +8,10 @@ class DefineMachine(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Define a **Machine** (Node) manually, declaring its existence to the server.\n"
+            "- Description: Define a **Machine** (Client) manually, declaring its existence to the server.\n\n"
             "**Input Parameters**:\n"
             "- machine_name (Required): The name of the machine to define.\n"
-            "- description (Optional): Description of the machine.\n"
+            "- description (Optional): Description of the machine.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the machine was defined."
         )
@@ -40,10 +40,10 @@ class UpdateMachine(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates properties of a registered **Machine** (Node).\n"
+            "- Description: Updates properties of a registered **Machine** (Client).\n\n"
             "**Input Parameters**:\n"
             "- machine_name (Required): The name of the machine.\n"
-            "- description (Optional): New description for the machine.\n"
+            "- description (Optional): New description for the machine.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the machine was updated."
         )
@@ -69,9 +69,10 @@ class DeleteMachine(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Machine** (Client) definition.\n"
+            "- Description: Deletes a **Machine** (Client) definition.\n\n"
             "**Input Parameters**:\n"
-            "- machine_name (Required): The name of the machine to delete.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- machine_name (Required): The name of the machine to delete.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the machine was deleted."
         )

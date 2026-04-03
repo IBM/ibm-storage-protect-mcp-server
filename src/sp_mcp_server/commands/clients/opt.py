@@ -9,7 +9,7 @@ class DefineClientOptSet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Client Option Set**. This profile contains a set of rules (like include/exclude filters) that can be applied to nodes.\n"
+            "Defines a **Client Option Set** in SP. This profile contains a set of rules (like include/exclude filters) that can be applied to Nodes.\n"
             "**Input Parameters**:\n"
             "- option_set_name (Required): Unique name for the configuration profile.\n"
             "- description (Optional): Description of the profile's purpose.\n"
@@ -230,7 +230,7 @@ class QueryClientOptionSet(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query **Client Option Sets**, which centralize node configuration.\n\n"
+            "Query node option sets, which centralize node configuration.\n\n"
             "**Input Parameters**:\n"
             "- option_set (Optional): Name of the option set.\n\n"
             "**Output Parameters**:\n"

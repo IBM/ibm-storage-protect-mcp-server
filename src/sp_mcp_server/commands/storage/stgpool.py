@@ -9,13 +9,13 @@ class DefineStoragePool(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a new **Storage Pool**. This is a named resource consisting of multiple storage units (volumes) where backup data is stored.\n"
+            "- Description: Defines a new **Storage Pool** (also referred to as a Container for certain pool types). This is a named resource consisting of multiple storage units (volumes) where backup data is stored.\n"
             "**Input Parameters**:\n"
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
             "- pool_name (Required): Name for the new Storage Pool.\n"
             "- device_class_name (Required): The **Device Class** determining the hardware type (e.g., LTO, DISK).\n"
             "- pool_type (Optional): The function of the pool ('PRIMARY', 'COPY', 'ACTIVE', 'CONTAINER').\n"
-            "- description (Optional): Description of the pool.\n"
+            "- description (Optional): Description of the target.\n"
             "- max_scratch (Optional): Maximum number of scratch volumes allowed.\n"
             "- reclaim (Optional): Threshold percentage to trigger space reclamation.\n"
             "- collocate (Optional): Collocation setting to group data (e.g., by Node or Group).\n"
@@ -71,7 +71,7 @@ class DefineStoragePoolDirectory(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Adds a filesystem directory to a **Container Storage Pool** for deduplicated data storage.\n"
+            "- Description: Adds a filesystem directory to a **Container Storage Pool** (Storage Pool Directory) for deduplicated data storage.\n"
             "**Input Parameters**:\n"
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
             "- pool_name (Required): The name of the Container Storage Pool.\n"
@@ -102,9 +102,10 @@ class UpdateStorageTarget(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Update a storage target (known as a Storage Pool in SP) configuration. A storage pool is a named set of volumes used to store data.\n"
+            "- Description: Update a Storage Pool configuration. A storage pool is a named set of volumes used to store data.\n"
             "**Input Parameters**:\n"
-            "- target_name (Required): Name of the storage target (pool) to update.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- target_name (Required): Name of the storage pool to update.\n"
             "- description (Optional): New description for the pool.\n"
             "- max_scratch (Optional): Maximum number of scratch volumes allowed.\n"
             "- reclaim_threshold (Optional): Threshold percentage for space reclamation (0-100).\n"
@@ -140,13 +141,15 @@ class UpdateStoragePool(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Update a storage pool.\n"
+            "- Description: Update a storage pool.\n"
             "**Input Parameters**:\n"
             "- pool_name (Required): Name of the storage pool to update.\n"
             "- description (Optional): New description.\n"
             "- max_scratch (Optional): New max scratch limit.\n"
             "- reclaim (Optional): New reclamation threshold.\n"
-            "- accession (Optional): New access mode (READWRITE, READONLY, UNAVAILABLE, etc.)."
+            "- accession (Optional): New access mode (READWRITE, READONLY, UNAVAILABLE, etc.).\n"
+            "**Output Parameters**:\n"
+            "- Result: Success message indicating the pool was updated."
         )
     @property
     def args_schema(self) -> Dict[str, Any]:
@@ -176,9 +179,10 @@ class DeleteStorageTarget(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Removes a storage target (Storage Pool). This deletes the pool definition.\n"
+            "- Description: Removes a Storage Pool. This deletes the pool definition.\n"
             "**Input Parameters**:\n"
-            "- target_name (Required): Name of the storage target (pool) to delete.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- target_name (Required): Name of the storage pool to delete.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the pool was deleted."
         )
@@ -201,7 +205,7 @@ class DeleteStoragePool(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Storage Pool**. Ensure the pool is empty before deleting.\n"
+            "- Description: Deletes a **Storage Pool**. Ensure the pool is empty before deleting.\n"
             "**Input Parameters**:\n"
             "- pool_name (Required): The name of the storage pool to delete.\n"
             "**Output Parameters**:\n"
@@ -227,9 +231,10 @@ class QueryStorageContainer(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Detailed query for **Storage Targets** (Storage Pools). Returns configuration, usage, and status.\n"
+            "- Description: Detailed query for **Storage Pools** (Containers). Returns configuration, usage, and status.\n"
             "**Input Parameters**:\n"
-            "- container_name (Optional): Specific Storage Target name to query. If omitted, lists all.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- container_name (Optional): Specific Storage Pool name to query. If omitted, lists all.\n"
             "- format (Optional): 'standard' or 'detailed' view.\n"
             "**Output Parameters**:\n"
             "- Storage Pool Name: Unique identifier.\n"
@@ -273,7 +278,7 @@ class QueryContainerDirectory(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query directories used for storage by directory-container storage pools.\n\n"
+            "- Description: Query directories used for storage by directory-container storage pools.\n\n"
             "**Input Parameters**:\n"
             "- container_name (Optional): Storage container name.\n\n"
             "**Output Parameters**:\n"

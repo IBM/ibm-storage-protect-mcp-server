@@ -295,6 +295,20 @@ python -m sp_mcp_server.main --enable-servers storage
 - Library Type: Type of library (e.g., SCSI, SHARED).
 - Device: Device identifier.
 
+`QueryLibraryVolume` (`query_library_volume`)
+- Description: Query specific volumes physically located within a tape library.
+
+**Input Parameters**:
+- isp_server_name (Optional): Target ISP Server name from registry.
+- library_name (Optional): Library name.
+- volume_name (Optional): Volume name.
+
+**Output Parameters**:
+- Library Name: Name of the library.
+- Volume Name: Name of the volume.
+- Status: Current status (e.g., Private, Scratch).
+- Owner: Owner of the volume (for private volumes).
+
 `DefineDrive` (`define_drive`)
 - Description: Defines a **Tape Drive** within a specific Tape Library.
 **Input Parameters**:
@@ -491,25 +505,94 @@ python -m sp_mcp_server.main --enable-servers storage
 `QueryDamagedData` (`query_damaged_data`)
 - Description: Query data marked as damaged within storage containers.
 
+**Input Parameters**:
+- isp_server_name (Optional): Target ISP Server name from registry.
+- container_name (Optional): Storage container name to check.
+
+**Output Parameters**:
+- Storage Pool Name: The container.
+- Object ID: ID of the damaged object.
+- Type: Type of damage.
+
 `QueryContainerCleanup` (`query_container_cleanup`)
 - Description: Query the cleanup process status for source storage containers.
+
+**Input Parameters**:
+- isp_server_name (Optional): Target ISP Server name from registry.
+- None.
+
+**Output Parameters**:
+- Storage Pool Name: The container.
+- Phase: Cleanup phase.
+- Status: Current status.
 
 `QueryContainerConversion` (`query_container_conversion`)
 - Description: Query the status of storage container conversion (e.g., changing format).
 
+**Input Parameters**:
+- isp_server_name (Optional): Target ISP Server name from registry.
+- None.
+
+**Output Parameters**:
+- Process: The conversion process info.
+- Status: Status of conversion.
+
 `QueryDeduplicationStats` (`query_deduplication_stats`)
 - Description: Query statistics related to data deduplication savings in storage containers.
+
+**Input Parameters**:
+- isp_server_name (Optional): Target ISP Server name from registry.
+- container_name (Optional): Storage container name.
+
+**Output Parameters**:
+- Storage Pool Name: The container.
+- Total Data Protected: Logical amount of data.
+- Total Space Used: Physical space used.
+- Deduplication Ratio: Efficiency ratio.
 
 `QueryExtentUpdates` (`query_extent_updates`)
 - Description: Query information about updated data extents in the system.
 
+**Input Parameters**:
+- isp_server_name (Optional): Target ISP Server name from registry.
+- None.
+
+**Output Parameters**:
+- Extent ID: Identifier for the data chunk.
+- Status: Status of the update.
+
 `QueryShreddingStatus` (`query_shredding_status`)
 - Description: Query the status of secure data shredding operations.
+
+**Input Parameters**:
+- isp_server_name (Optional): Target ISP Server name from registry.
+- None.
+
+**Output Parameters**:
+- Shredding Active: Yes/No.
+- Passes: Number of overwrite passes.
 
 `QueryTargetServer` (`query_target_server`)
 - Description: Query the definitions of other backup servers known to this system.
 
+**Input Parameters**:
+- isp_server_name (Optional): Target ISP Server name from registry.
+- server_name (Optional): Name of the target server.
+
+**Output Parameters**:
+- Server Name: Name of the remote server.
+- Server Address: Network address.
+- Server Password Set: Indicates if a password is set.
+
 `QueryServerGroup` (`query_server_group`)
 - Description: Query server groups, which are collections of servers managed together.
+
+**Input Parameters**:
+- isp_server_name (Optional): Target ISP Server name from registry.
+- group_name (Optional): Name of the server group.
+
+**Output Parameters**:
+- Group Name: Name of the group.
+- Member Server: Servers belonging to the group.
 
 

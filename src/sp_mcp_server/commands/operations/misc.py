@@ -8,7 +8,7 @@ class DefineScratchPadEntry(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Define a **Scratch Pad Entry** (Administrator Note) for a specific object or purpose.\n"
+            "Define a **Scratch Pad Entry** (administrator note) for a specific object or purpose.\n"
             "**Input Parameters**:\n"
             "- object (Required): The name of the object to attach the note to.\n"
             "- message (Required): The content of the note.\n"

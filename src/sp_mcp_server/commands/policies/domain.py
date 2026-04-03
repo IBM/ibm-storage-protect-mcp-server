@@ -9,7 +9,7 @@ class DefinePolicyDomain(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a new **Policy Domain** (SLA). A logical grouping of nodes with similar backup requirements.\n"
+            "Defines a new **Policy Domain** (SLA). a logical grouping of clients with similar backup requirements.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Unique name for the Policy Domain.\n"
             "- description (Optional): Description of the domain's purpose.\n"
@@ -99,7 +99,7 @@ class DeletePolicyDomain(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Policy Domain** (SLA). Use carefully as it can impact all assigned nodes.\n"
+            "Deletes a **Policy Domain** (SLA). Use carefully as it can impact all assigned clients.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Name of the domain to delete.\n"
             "**Output Parameters**:\n"

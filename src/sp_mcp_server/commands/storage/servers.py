@@ -9,7 +9,7 @@ class QueryTargetServer(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query the definitions of other backup servers known to this system.\n\n"
+            "- Description: Query the definitions of other backup servers known to this system.\n\n"
             "**Input Parameters**:\n"
             "- server_name (Optional): Name of the target server.\n\n"
             "**Output Parameters**:\n"
@@ -41,7 +41,7 @@ class QueryServerGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query server groups, which are collections of servers managed together.\n\n"
+            "- Description: Query server groups, which are collections of servers managed together.\n\n"
             "**Input Parameters**:\n"
             "- group_name (Optional): Name of the server group.\n\n"
             "**Output Parameters**:\n"

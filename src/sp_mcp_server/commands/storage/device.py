@@ -9,7 +9,7 @@ class DefineDeviceClass(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Device Class**. Specifies the hardware type and management policies for storage devices.\n"
+            "- Description: Defines a **Device Class** in SP. Specifies the hardware type and management policies for storage devices.\n"
             "**Input Parameters**:\n"
             "- device_class_name (Required): Name for the Device Class.\n"
             "- dev_type (Required): The underlying technology (e.g., 'LTO', 'DISK', 'FILE').\n"
@@ -47,10 +47,10 @@ class UpdateDeviceClass(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates a **Device Class** definition.\n"
+            "- Description: Updates a **Device Class** definition.\n"
             "**Input Parameters**:\n"
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
-            "- device_class_name (Required): The device class name.\n"
+            "- devclass_name (Required): The device class name.\n"
             "- mount_limit (Optional): Max number of mounts allowed (DRIVES or number).\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the device class was updated."
@@ -77,10 +77,10 @@ class DeleteDeviceClass(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Device Class** definition.\n"
+            "- Description: Deletes a **Device Class** definition.\n"
             "**Input Parameters**:\n"
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
-            "- device_class_name (Required): The name of the device class to delete.\n"
+            "- devclass_name (Required): The name of the device class to delete.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the device class was deleted."
         )
@@ -104,9 +104,10 @@ class QueryDeviceType(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display information about device types (Device Classes) used for storage.\n\n"
+            "- Description: Display information about device types (Device Classes) used for storage.\n"
             "**Input Parameters**:\n"
-            "- device_type_name (Optional): Name of the device class.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- device_type_name (Optional): Name of the device class.\n"
             "**Output Parameters**:\n"
             "- Device Class Name: Name of the device class.\n"
             "- Device Access Strategy: Sequential or Random (Disk).\n"
@@ -136,9 +137,10 @@ class QuerySanDevices(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query storage devices detected on the Storage Area Network (SAN).\n\n"
+            "- Description: Query storage devices detected on the Storage Area Network (SAN).\n"
             "**Input Parameters**:\n"
-            "- None.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- None.\n"
             "**Output Parameters**:\n"
             "- Device Name: Name of the device.\n"
             "- Serial Number: Hardware serial number."

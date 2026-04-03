@@ -11,13 +11,13 @@ class DefineServer(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Define a **Server** for server-to-server communications (e.g., replication, library sharing).\n"
+            "- Description: Define a **Server** for server-to-server communications (e.g., replication, library sharing).\n\n"
             "**Input Parameters**:\n"
             "- server_name (Required): Name of the server.\n"
             "- password (Required): Password for authentication.\n"
             "- hl_address (Required): High level address (IP address or DNS name).\n"
             "- ll_address (Required): Low level address (TCP Port).\n"
-            "- description (Optional): Description.\n"
+            "- description (Optional): Description.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the server was defined."
         )
@@ -51,10 +51,10 @@ class DefineServerGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Define a **Server Group** to manage multiple servers as a single unit.\n"
+            "- Description: Define a **Server Group** to manage multiple servers as a single unit.\n\n"
             "**Input Parameters**:\n"
             "- group_name (Required): The name of the new server group.\n"
-            "- description (Optional): Description of the group.\n"
+            "- description (Optional): Description of the group.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the server group was defined."
         )
@@ -83,10 +83,10 @@ class DefineGroupMember(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Add a **Server** to a **Server Group**.\n"
+            "- Description: Add a **Server** to a **Server Group**.\n\n"
             "**Input Parameters**:\n"
             "- group_name (Required): The name of the server group.\n"
-            "- server_name (Required): The name of the server to add.\n"
+            "- server_name (Required): The name of the server to add.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the server was added to the group."
         )
@@ -110,9 +110,10 @@ class DefineEventServer(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Define a server as the **Event Server** (target for logging events).\n"
+            "- Description: Define a server as the **Event Server** (target for logging events).\n\n"
             "**Input Parameters**:\n"
-            "- server_name (Required): The name of the server to receive events.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- server_name (Required): The name of the server to receive events.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the event server was defined."
         )
@@ -135,13 +136,13 @@ class UpdateServer(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates the properties of an existing **Server** definition used for server-to-server communications.\n"
+            "- Description: Updates the properties of an existing **Server** definition used for server-to-server communications.\n\n"
             "**Input Parameters**:\n"
             "- server_name (Required): The name of the server to update.\n"
             "- password (Optional): Update the password.\n"
             "- hl_address (Optional): Update the High Level Address (IP/Hostname).\n"
             "- ll_address (Optional): Update the Low Level Address (Port).\n"
-            "- description (Optional): Update the description.\n"
+            "- description (Optional): Update the description.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the server was updated."
         )
@@ -173,10 +174,10 @@ class UpdateServerGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates the description of an existing **Server Group**.\n"
+            "- Description: Updates the description of an existing **Server Group**.\n\n"
             "**Input Parameters**:\n"
             "- group_name (Required): The name of the server group.\n"
-            "- description (Optional): The new description for the group.\n"
+            "- description (Optional): The new description for the group.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the group was updated."
         )
@@ -202,9 +203,10 @@ class DeleteServer(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Server** definition. This removes the configuration for server-to-server communication.\n"
+            "- Description: Deletes a **Server** definition. This removes the configuration for server-to-server communication.\n\n"
             "**Input Parameters**:\n"
-            "- server_name (Required): The name of the server to delete.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- server_name (Required): The name of the server to delete.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the server was deleted."
         )
@@ -227,9 +229,10 @@ class DeleteServerGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Server Group**. This removes the grouping but does not delete the member servers themselves.\n"
+            "- Description: Deletes a **Server Group**. This removes the grouping but does not delete the member servers themselves.\n\n"
             "**Input Parameters**:\n"
-            "- group_name (Required): The name of the server group to delete.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- group_name (Required): The name of the server group to delete.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the group was deleted."
         )
@@ -252,10 +255,10 @@ class DeleteGroupMember(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Removes a **Server** from a **Server Group**.\n"
+            "- Description: Removes a **Server** from a **Server Group**.\n\n"
             "**Input Parameters**:\n"
             "- group_name (Required): The name of the server group.\n"
-            "- server_name (Required): The name of the server to remove.\n"
+            "- server_name (Required): The name of the server to remove.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the member was removed."
         )
@@ -279,9 +282,10 @@ class DeleteEventServer(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes an **Event Server** definition.\n"
+            "- Description: Deletes an **Event Server** definition.\n\n"
             "**Input Parameters**:\n"
-            "- server_name (Required): The name of the event server to delete.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- server_name (Required): The name of the event server to delete.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the event server was deleted."
         )
@@ -305,7 +309,7 @@ class QueryServerStatus(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display the general health and status of the backup server.\n\n"
+            "- Description: Display the general health and status of the backup server.\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"
@@ -341,23 +345,12 @@ class QueryServerOption(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display global server configuration options.\n\n"
+            "- Description: Display global server configuration options (e.g., ACTIVELOGSIZE, ARCHLOGSIZE).\n\n"
+            "**Note**: This tool provides read-only information. There is currently **no tool** to modify or set these server options.\n\n"
             "**Usage Guide**:\n"
             "- Call without arguments to list ALL options and their current values.\n"
             "- Call with `option_name` to query a specific option.\n"
-            "- Supports wildcards (e.g., `LOG*`).\n\n"
-            "**Common Options by Category**:\n"
-            "- **Communication**: TCPPORT, MAXSESSIONS, IDLETIMEOUT, COMMMETHOD, COMMTIMEOUT, MINJOBS, MAXJOBS.\n"
-            "- **Logging**: ACTIVELOGDIRECTORY, ACTIVELOGSIZE, ARCHLOGDIRECTORY, MIRRORLOGDIRECTORY, ACTLOGRETENTION.\n"
-            "- **Security**: PASSWORDLIFE, FIPSMODE, LDAPURL, ADMINONCLIENTPORT, REGAUTH.\n"
-            "- **Database**: DBMEMPERCENT, ARCHLOGUSEDTHRESHOLD, BUFFPOOLSIZE.\n"
-            "- **Storage/Cloud**: EXPINTERVAL, MOVEBATCHSIZE, MOVESIZETHRESH, RECLAIM, DEDUPREQUIRESBACKUP.\n"
-            "- **Integrity**: AUDITSTORAGE, CRCVALIDATE, CHECKTAPEPOS.\n\n"
-            "**Input Parameters**:\n"
-            "- option_name (Optional): Specific option to query (e.g., 'MAXSESSIONS').\n\n"
-            "**Output Parameters**:\n"
-            "- Option: Name of the setting.\n"
-            "- Setting: Current value."
+            "- Supports wildcards (e.g., `LOG*`)."
         )
 
     @property

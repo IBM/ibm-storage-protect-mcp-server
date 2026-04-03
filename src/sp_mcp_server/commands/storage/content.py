@@ -9,7 +9,7 @@ class QueryDamagedData(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query data marked as damaged within storage containers.\n\n"
+            "- Description: Query data marked as damaged within storage containers.\n\n"
             "**Input Parameters**:\n"
             "- container_name (Optional): Storage container name to check.\n\n"
             "**Output Parameters**:\n"
@@ -41,7 +41,7 @@ class QueryContainerCleanup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query the cleanup process status for source storage containers.\n\n"
+            "- Description: Query the cleanup process status for source storage containers.\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"
@@ -68,7 +68,7 @@ class QueryContainerConversion(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query the status of storage container conversion (e.g., changing format).\n\n"
+            "- Description: Query the status of storage container conversion (e.g., changing format).\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"
@@ -94,7 +94,7 @@ class QueryDeduplicationStats(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query statistics related to data deduplication savings in storage containers.\n\n"
+            "- Description: Query statistics related to data deduplication savings in storage containers.\n\n"
             "**Input Parameters**:\n"
             "- container_name (Optional): Storage container name.\n\n"
             "**Output Parameters**:\n"
@@ -127,7 +127,7 @@ class QueryExtentUpdates(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query information about updated data extents in the system.\n\n"
+            "- Description: Query information about updated data extents in the system.\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"
@@ -153,7 +153,7 @@ class QueryShreddingStatus(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query the status of secure data shredding operations.\n\n"
+            "- Description: Query the status of secure data shredding operations.\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"

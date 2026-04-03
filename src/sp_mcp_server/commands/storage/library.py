@@ -9,7 +9,7 @@ class DefineLibrary(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Tape Library** configuration physically or logically connected to the server.\n"
+            "- Description: Defines a **Tape Library** configuration physically or logically connected to the server.\n"
             "**Input Parameters**:\n"
             "- library_name (Required): Unique name for the library.\n"
             "- lib_type (Required): The interface type (e.g., 'SCSI', 'VTL', 'SHARED').\n"
@@ -46,7 +46,7 @@ class UpdateLibrary(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates a **Library** definition.\n"
+            "- Description: Updates a **Library** definition.\n"
             "**Input Parameters**:\n"
             "- library_name (Required): The name of the library.\n"
             "- shared (Optional): 'YES' or 'NO' to indicate if shared.\n"
@@ -75,7 +75,7 @@ class DeleteLibrary(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Library** definition.\n"
+            "- Description: Deletes a **Library** definition.\n"
             "**Input Parameters**:\n"
             "- library_name (Required): The name of the library to delete.\n"
             "**Output Parameters**:\n"
@@ -101,9 +101,10 @@ class QueryTapeLibrary(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display information about tape libraries defined in the system.\n\n"
+            "- Description: Display information about tape libraries defined in the system.\n"
             "**Input Parameters**:\n"
-            "- library_name (Optional): Name of the library.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- library_name (Optional): Name of the library.\n"
             "**Output Parameters**:\n"
             "- Library Name: Name of the library.\n"
             "- Library Type: Type of library (e.g., SCSI, SHARED).\n"

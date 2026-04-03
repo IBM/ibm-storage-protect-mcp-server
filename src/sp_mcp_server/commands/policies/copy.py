@@ -9,17 +9,13 @@ class DefineCopyGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Copy Group** that specifies exact retention parameters (e.g., how many versions to keep).\n"
+            "- Description: Defines a **Copy Group** that specifies exact retention parameters (e.g., how many versions to keep).\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
             "- policy_set_name (Required): Parent Policy Set.\n"
             "- class_name (Required): Parent Management Class.\n"
             "- type (Required): 'BACKUP' or 'ARCHIVE' (Defaults to BACKUP).\n"
             "- destination (Required): The **Storage Pool** where data will be stored.\n"
-            "- verexists (Optional): Max versions to retain while file exists on client.\n"
-            "- verdeleted (Optional): Max versions to retain after file is deleted on client.\n"
-            "- retextra (Optional): Days to retain inactive versions.\n"
-            "- retonly (Optional): Days to retain the last version after deletion.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the rule was defined."
         )
@@ -61,17 +57,13 @@ class UpdateCopyGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates a **Copy Group** to modify retention parameters.\n"
+            "- Description: Updates a **Copy Group** to modify retention parameters.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
             "- policy_set_name (Required): Parent Policy Set.\n"
             "- class_name (Required): Parent Management Class.\n"
             "- type (Optional): 'BACKUP' or 'ARCHIVE' (Defaults to BACKUP).\n"
             "- destination (Optional): New Storage Pool.\n"
-            "- verexists (Optional): Update max versions retained while file exists.\n"
-            "- verdeleted (Optional): Update max versions retained after file is deleted.\n"
-            "- retextra (Optional): Update retention days for inactive versions.\n"
-            "- retonly (Optional): Update retention days for last version.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the rule was updated."
         )
@@ -108,12 +100,11 @@ class DeleteCopyGroup(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Copy Group**. This removes specific retention settings from a management class.\n"
+            "- Description: Deletes a **Copy Group**. This removes specific retention settings from a management class.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
             "- policy_set_name (Required): Parent Policy Set.\n"
             "- class_name (Required): Parent Management Class.\n"
-            "- type (Optional): 'BACKUP' or 'ARCHIVE' (Defaults to BACKUP).\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the rule was deleted."
         )
@@ -140,7 +131,7 @@ class QueryRetentionRuleConfig(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Queries **Copy Groups**. Shows exact numeric values for retention limits.\n"
+            "- Description: Queries **Copy Groups**. Shows exact numeric values for retention limits.\n"
             "**Input Parameters**:\n"
             "- policy_group (Optional): Parent domain.\n"
             "- policy_set (Optional): Parent profile.\n"

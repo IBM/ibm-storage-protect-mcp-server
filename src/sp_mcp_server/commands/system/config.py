@@ -9,7 +9,8 @@ class QueryCatalog(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display information about the server's metadata catalog (database).\n\n"
+            "- Description: Display information about the server's metadata catalog (database).\n\n"
+            "**Note**: This is a read-only tool. There is currently **no tool** to extend or increase the database size.\n\n"
             "**Input Parameters**:\n"
             "- format (Optional): Level of detail (standard, detailed).\n\n"
             "**Output Parameters**:\n"
@@ -48,7 +49,8 @@ class QueryCatalogSpace(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display storage space utilization for the metadata catalog (database).\n\n"
+            "- Description: Display storage space utilization for the metadata catalog (database).\n\n"
+            "**Note**: This is a read-only tool. There is currently **no tool** to extend or increase the database size.\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"
@@ -76,7 +78,7 @@ class QuerySystemInfo(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query hardware and system information from a client or the server.\n\n"
+            "- Description: Query hardware and system information from a client or the server.\n\n"
             "**Input Parameters**:\n"
             "- client_name (Optional): Name of the client/workload to query.\n\n"
             "**Output Parameters**:\n"
@@ -109,7 +111,7 @@ class QueryMonitoringConfig(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display configuration settings for system monitoring.\n\n"
+            "- Description: Display configuration settings for system monitoring.\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"
@@ -135,7 +137,7 @@ class QueryMonitoringStatus(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display current status of system monitors.\n\n"
+            "- Description: Display current status of system monitors.\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"

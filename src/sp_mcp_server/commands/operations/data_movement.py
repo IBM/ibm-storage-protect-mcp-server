@@ -160,7 +160,8 @@ class QueryExportJob(BaseCommand):
         return (
             "Query for active or suspended export operations (data movement out of system).\n\n"
             "**Input Parameters**:\n"
-            "- client_name (Optional): Client name to filter export jobs.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Optional): node_name to filter export jobs.\n\n"
             "**Output Parameters**:\n"
             "- Process ID: The background job ID.\n"
             "- State: Active or Suspended.\n"
@@ -227,7 +228,7 @@ class QueryRestoreJob(BaseCommand):
             "- None.\n\n"
             "**Output Parameters**:\n"
             "- Session ID: The restore session.\n"
-            "- Client Name: The client restoring.\n"
+            "- Node Name: The node restoring.\n"
             "- State: Restartable state."
         )
 

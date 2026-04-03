@@ -9,7 +9,7 @@ class DefineDataMover(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Data Mover**. Used for operations like NDMP backups (NAS).\n"
+            "- Description: Defines a **Data Mover** in SP. Used for operations like NDMP backups (NAS).\n"
             "**Input Parameters**:\n"
             "- name (Required): Unique name for the Data Mover.\n"
             "- type (Required): The protocol type (e.g., 'NAS').\n"
@@ -49,10 +49,10 @@ class UpdateDataMover(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates a **Data Mover** configuration.\n"
+            "- Description: Updates a **Data Mover** configuration.\n"
             "**Input Parameters**:\n"
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
-            "- name (Required): The data mover name.\n"
+            "- mover_name (Required): The data mover name.\n"
             "- type (Optional): The new type (e.g., NAS).\n"
             "- user_id (Optional): The user ID for authentication.\n"
             "- password (Optional): The password for authentication.\n"
@@ -87,10 +87,10 @@ class DeleteDataMover(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Data Mover** definition.\n"
+            "- Description: Deletes a **Data Mover** definition.\n"
             "**Input Parameters**:\n"
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
-            "- name (Required): The name of the data mover to delete.\n"
+            "- mover_name (Required): The name of the data mover to delete.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the data mover was deleted."
         )
@@ -114,9 +114,10 @@ class QueryDataMover(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display definitions for data movers (e.g., for NAS backup).\n\n"
+            "- Description: Display definitions for data movers (e.g., for NAS backup).\n"
             "**Input Parameters**:\n"
-            "- name (Optional): Data mover name.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- name (Optional): Data mover name.\n"
             "**Output Parameters**:\n"
             "- Data Mover Name: Name of the mover.\n"
             "- Type: Type of mover (e.g., NAS).\n"

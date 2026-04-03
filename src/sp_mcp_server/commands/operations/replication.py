@@ -39,7 +39,7 @@ class QueryReplicationFailures(BaseCommand):
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"
-            "- Client Name: The client that failed.\n"
+            "- Node Name: The node that failed.\n"
             "- File Space: The backup volume that failed.\n"
             "- Failure Date: Time of failure."
         )
@@ -65,7 +65,7 @@ class QueryReplicationStatus(BaseCommand):
             "Query active node replication processes.\n\n"
             "**Input Parameters**:\n"
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
-            "- node_name (Optional): Node name to filter.\n\n"
+            "- client_name (Optional): Node name to filter.\n\n"
             "**Output Parameters**:\n"
             "- Node Name: Node being replicated.\n"
             "- Bytes Replicated: Data moved.\n"

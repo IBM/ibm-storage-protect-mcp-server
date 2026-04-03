@@ -9,9 +9,14 @@ class DefineVolume(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Storage Unit** (known as a **Volume** in SP) within a Storage Target (Pool). Represents a specific disk, file, or tape.\n"
+            "- Description: Defines a **Storage Unit** (known as a **Volume** in SP) within a Storage Pool. Represents a specific disk, file, or tape.\n"
             "**Input Parameters**:\n"
+<<<<<<< HEAD
             "- pool_name (Required): The name of the parent Storage Target.\n"
+=======
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- pool_name (Required): The name of the parent Storage Pool.\n"
+>>>>>>> 98bb007 (Updated tools descriptions)
             "- volume_name (Required): Unique identifier/path for the volume.\n"
             "- access (Optional): Availability mode (e.g., 'READWRITE', 'READONLY').\n"
             "**Output Parameters**:\n"
@@ -47,7 +52,7 @@ class UpdateVolume(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates an existing **Storage Volume**. Can modify its access mode.\n"
+            "- Description: Updates an existing **Storage Volume**. Can modify its access mode.\n"
             "**Input Parameters**:\n"
             "- volume_name (Required): The name of the volume to update.\n"
             "- access (Optional): The new access mode (READWRITE, READONLY, UNAVAILABLE, DESTROYED, OFFSITE).\n"
@@ -76,7 +81,7 @@ class UpdateVolumeHistory(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates **Volume History** information. Can change the physical location of a volume.\n"
+            "- Description: Updates **Volume History** information. Can change the physical location of a volume.\n"
             "**Input Parameters**:\n"
             "- volume_name (Required): The name of the volume.\n"
             "- location (Optional): The physical location description for the volume.\n"
@@ -105,7 +110,7 @@ class DeleteVolume(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Storage Volume**.\n"
+            "- Description: Deletes a **Storage Volume**.\n"
             "**Input Parameters**:\n"
             "- volume_name (Required): The name of the volume to delete.\n"
             "**Output Parameters**:\n"
@@ -134,14 +139,14 @@ class QueryMediaVolume(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Queries **Storage Units** (Volumes) within a target. Returns capacity, status, and physical location info.\n"
+            "- Description: Queries **Storage Units** (Volumes) within a target. Returns capacity, status, and physical location info.\n"
             "**Input Parameters**:\n"
             "- volume_name (Optional): Specific volume name.\n"
-            "- container_name (Optional): Filter volumes by Storage Target (Pool).\n"
+            "- container_name (Optional): Filter volumes by Storage Pool.\n"
             "- status (Optional): Filter by status (e.g., 'FILLING', 'FULL', 'UNAVAILABLE').\n"
             "**Output Parameters**:\n"
             "- Volume Name: Unique path/identifier.\n"
-            "- Storage Pool Name: Parent Storage Target.\n"
+            "- Storage Pool Name: Parent Storage Pool.\n"
             "- Estimated Capacity: Total size.\n"
             "- Pct Util: Percentage filled.\n"
             "- Status: Operational status."
@@ -178,9 +183,14 @@ class QueryVolumeHistory(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display historical records of sequential volume usage (e.g., Database Backups).\n\n"
+            "- Description: Display historical records of sequential volume usage (e.g., Database Backups).\n"
             "**Input Parameters**:\n"
+<<<<<<< HEAD
             "- type (Optional): Type of history to query (e.g., DBBACKUP, EXPORT, RPFILE).\n\n"
+=======
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- type (Optional): Type of history to query (e.g., DBBACKUP, EXPORT, RPFILE).\n"
+>>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- Date/Time: When the volume was written.\n"
             "- Volume Name: The name of the volume.\n"
@@ -210,9 +220,14 @@ class QuerySequentialMedia(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query sequential-access media associated with a storage container.\n\n"
+            "- Description: Query sequential-access media associated with a storage container.\n"
             "**Input Parameters**:\n"
+<<<<<<< HEAD
             "- container_name (Optional): Storage container name.\n\n"
+=======
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- container_name (Optional): Storage container name.\n"
+>>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- Volume Name: The media volume.\n"
             "- State: Mountable or not.\n"
@@ -242,9 +257,13 @@ class QueryMountedVolumes(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display information on currently mounted sequential access volumes.\n\n"
+            "- Description: Display information on currently mounted sequential access volumes.\n"
             "**Input Parameters**:\n"
+<<<<<<< HEAD
             "- None.\n\n"
+=======
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+>>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- Volume Name: The mounted volume.\n"
             "- Drive Name: The drive it is mounted in.\n"
@@ -269,9 +288,13 @@ class QueryRecoveryMedia(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query media needed for disaster recovery.\n\n"
+            "- Description: Query media needed for disaster recovery.\n"
             "**Input Parameters**:\n"
+<<<<<<< HEAD
             "- None.\n\n"
+=======
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+>>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- Volume Name: The media volume.\n"
             "- Storage Pool Name: The associated container."
@@ -295,9 +318,14 @@ class QueryRetentionMedia(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query media moving between retention states (e.g., Vault to Onsite).\n\n"
+            "- Description: Query media moving between retention states (e.g., Vault to Onsite).\n"
             "**Input Parameters**:\n"
+<<<<<<< HEAD
             "- days (Optional): Number of days matching criteria.\n\n"
+=======
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- days (Optional): Number of days matching criteria.\n"
+>>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- Volume Name: The media volume.\n"
             "- State: Current retention state.\n"
@@ -327,10 +355,16 @@ class QueryBackupTOC(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display the Table of Contents (TOC) for a backup image, listing files within it.\n\n"
+            "- Description: Display the Table of Contents (TOC) for a backup image, listing files within it.\n"
             "**Input Parameters**:\n"
+<<<<<<< HEAD
             "- client_name (Optional): Client name.\n"
             "- backup_set_name (Optional): Backup set/File space name.\n\n"
+=======
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Optional): Node name.\n"
+            "- backup_set_name (Optional): Backup set/File space name.\n"
+>>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- File Name: Name of the file in the backup.\n"
             "- Size: Size of the file.\n"

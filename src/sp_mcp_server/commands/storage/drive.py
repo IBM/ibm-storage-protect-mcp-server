@@ -9,7 +9,7 @@ class DefineDrive(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Tape Drive** within a specific Tape Library.\n"
+            "- Description: Defines a **Tape Drive** within a specific Tape Library.\n"
             "**Input Parameters**:\n"
             "- library_name (Required): The name of the parent Library.\n"
             "- drive_name (Required): Unique name for the drive.\n"
@@ -47,7 +47,7 @@ class UpdateDrive(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates a **Drive** definition.\n"
+            "- Description: Updates a **Drive** definition.\n"
             "**Input Parameters**:\n"
             "- library_name (Required): The library name containing the drive.\n"
             "- drive_name (Required): The drive name.\n"
@@ -80,7 +80,7 @@ class DeleteDrive(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Drive** definition.\n"
+            "- Description: Deletes a **Drive** definition.\n"
             "**Input Parameters**:\n"
             "- library_name (Required): The library containing the drive.\n"
             "- drive_name (Required): The name of the drive to delete.\n"
@@ -108,10 +108,10 @@ class QueryTapeDrive(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display information about tape drives associated with a library.\n\n"
+            "- Description: Display information about tape drives associated with a library.\n"
             "**Input Parameters**:\n"
             "- library_name (Optional): The library name.\n"
-            "- drive_name (Optional): The drive name.\n\n"
+            "- drive_name (Optional): The drive name.\n"
             "**Output Parameters**:\n"
             "- Library Name: The library the drive belongs to.\n"
             "- Drive Name: Name of the drive.\n"
@@ -145,12 +145,7 @@ class QueryTapeAlerts(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display settings and status for tape drive alerts.\n\n"
-            "**Input Parameters**:\n"
-            "- None.\n\n"
-            "**Output Parameters**:\n"
-            "- Alert Status: Enabled/Disabled.\n"
-            "- Drive: Associated drive."
+            "- Description: Display settings and status for tape drive alerts."
         )
 
     @property

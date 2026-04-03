@@ -8,13 +8,14 @@ class RegisterNode(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Registers a new **Client** (known as a **Node** in SP) for data protection. A Client represents a source system (like a server, laptop, or VM) that contains data to be backed up.\n"
+            "Registers a new **Node** (also commonly called a Client) in SP for data protection. A Node represents a source system (like a server, laptop, or VM) that contains data to be backed up.\n"
             "**Input Parameters**:\n"
-            "- client_name (Required): The unique name of the Client to register.\n"
-            "- password (Required): The password used for Client authentication.\n"
-            "- domain_name (Required): The **Policy Domain** (SLA) to which the Client will be assigned.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Required): The unique name of the node to register (also referred to as `node_name` in some APIs).\n"
+            "- password (Required): The password used for node authentication.\n"
+            "- domain_name (Required): The **Policy Domain** (SLA) to which the node will be assigned.\n"
             "**Output Parameters**:\n"
-            "- Result: Success message indicating the Client was registered."
+            "- Result: Success message indicating the node was registered."
         )
     @property
     def args_schema(self) -> Dict[str, Any]:
@@ -38,12 +39,13 @@ class RenameClient(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Renames an existing **Client** (Node). This updates the unique identifier used for all backup and restore operations for the source system.\n"
+            "Renames an existing **Node** (Client). This updates the unique identifier used for all backup and restore operations for the source system.\n"
             "**Input Parameters**:\n"
-            "- current_name (Required): The current name of the Client.\n"
-            "- new_name (Required): The new name for the Client.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- current_name (Required): The current name of the node.\n"
+            "- new_name (Required): The new name for the node.\n"
             "**Output Parameters**:\n"
-            "- Result: Success message indicating the Client was renamed."
+            "- Result: Success message indicating the node was renamed."
         )
     @property
     def args_schema(self) -> Dict[str, Any]:
@@ -65,9 +67,10 @@ class SetClientLock(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Locks or unlocks a **Client** (Node) to control access to the backup server. A locked Client cannot perform backups or restores.\n"
+            "Locks or unlocks a **Node** to control access to the backup server. A locked node cannot perform backups or restores.\n"
             "**Input Parameters**:\n"
-            "- client_name (Required): The name of the Client.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Required): The name of the node.\n"
             "- lock_status (Required): Set to 'lock' to disable access, or 'unlock' to enable access.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the lock status was updated."
@@ -93,15 +96,16 @@ class UpdateNode(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates properties of an existing **Client** (Node).\n"
+            "Updates properties of an existing **Node** (Client).\n"
             "**Input Parameters**:\n"
-            "- node_name (Required): Name of the Client to update.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- node_name (Required): Name of the node to update.\n"
             "- domain_name (Optional): Assign to a different **Policy Domain**.\n"
-            "- password (Optional): Update the Client password.\n"
+            "- password (Optional): Update the node password.\n"
             "- contact (Optional): Update contact information.\n"
             "- cloptset (Optional): Assign a different **Client Configuration Profile** (Option Set).\n"
             "**Output Parameters**:\n"
-            "- Result: Success message indicating the Client was updated."
+            "- Result: Success message indicating the node was updated."
         )
     @property
     def args_schema(self) -> Dict[str, Any]:
@@ -131,11 +135,12 @@ class DeleteClient(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Decomissions a **Client** (Node) and removes all its configuration from the server. This is a destructive operation.\n"
+            "Decommissions a **Node** and removes all its configuration from the server. This is a destructive operation.\n"
             "**Input Parameters**:\n"
-            "- client_name (Required): The name of the Client to delete.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Required): The name of the node to delete.\n"
             "**Output Parameters**:\n"
-            "- Result: Success message indicating the Client was deleted."
+            "- Result: Success message indicating the node was deleted."
         )
     @property
     def args_schema(self) -> Dict[str, Any]:
@@ -184,14 +189,15 @@ class QueryClient(BaseCommand):
         return (
             "Display information about registered clients (Nodes).\n\n"
             "**Input Parameters**:\n"
-            "- client_name (Optional): Name of the client to query.\n"
-            "- policy_group (Optional): Filter by policy group/domain.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Optional): Name of the node to query.\n"
+            "- domain_name (Optional): Filter by Policy Domain. (historically `policy_group` in code)\n\n"
             "**Output Parameters**:\n"
-            "- Client Name: The name of the client node.\n"
-            "- Platform: The client operating system.\n"
-            "- Policy Domain: The policy group the client belongs to.\n"
+            "- Node Name: The name of the node.\n"
+            "- Platform: The node operating system.\n"
+            "- Policy Domain: The Policy Domain the node belongs to.\n"
             "- Last Access: Days since last communication.\n"
-            "- Locked: Whether the client is locked.\n"
+            "- Locked: Whether the node is locked.\n"
             "- Password Set Date: Date password was last set."
         )
 
@@ -200,8 +206,10 @@ class QueryClient(BaseCommand):
         return {
             "type": "object",
             "properties": {
-                "client_name": {"type": "string", "description": "Name of the client to query. (maps to node_name)"},
-                "policy_group": {"type": "string", "description": "Filter by policy group/domain. (maps to domain_name)"}
+                "isp_server_name": {"type": "string", "description": "Target ISP Server name from registry (optional)."},
+
+                "client_name": {"type": "string", "description": "Name of the node to query."},
+                "domain_name": {"type": "string", "description": "Filter by Policy Domain. (historically `policy_group` in code)"}
             },
             "required": []
         }
@@ -210,8 +218,8 @@ class QueryClient(BaseCommand):
         cmd = "QUERY NODE"
         if arguments.get("client_name"):
             cmd += f" {arguments['client_name']}"
-        if arguments.get("policy_group"):
-            cmd += f" DOMAIN={arguments['policy_group']}"
+        if arguments.get("domain_name"):
+            cmd += f" DOMAIN={arguments['domain_name']}"
         return self._execute_simple_query(cmd)
 
 class QueryProxyClient(BaseCommand):
@@ -222,13 +230,14 @@ class QueryProxyClient(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query relationships where one client (agent) is authorized to act on behalf of another (target).\n\n"
+            "Query relationships where one node (agent) is authorized to act on behalf of another (target).\n\n"
             "**Input Parameters**:\n"
-            "- target_client (Optional): Target client name.\n"
-            "- agent_client (Optional): Agent client name.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- target_client (Optional): Target node name.\n"
+            "- agent_client (Optional): Agent node name.\n\n"
             "**Output Parameters**:\n"
-            "- Target Client: The client whose data is being accessed.\n"
-            "- Agent Client: The client granted access."
+            "- Target Node: The node whose data is being accessed.\n"
+            "- Agent Node: The node granted access."
         )
 
     @property
@@ -257,11 +266,12 @@ class QueryReplicationClient(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display information about replication status for a client.\n\n"
+            "Display information about replication status for a node.\n\n"
             "**Input Parameters**:\n"
-            "- client_name (Optional): Client name.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Optional): Node name.\n\n"
             "**Output Parameters**:\n"
-            "- Client Name: The executing client.\n"
+            "- Node Name: The executing node.\n"
             "- State: Replication state (e.g., SYNC, SENDING).\n"
             "- Target Server: Destination for replication."
         )
@@ -291,7 +301,8 @@ class QueryPVUEstimate(BaseCommand):
         return (
             "Display an estimate of the Processor Value Units (PVU) for license calculation.\n\n"
             "**Input Parameters**:\n"
-            "- client_name (Optional): Client name.\n\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- client_name (Optional): Node name.\n\n"
             "**Output Parameters**:\n"
             "- Node Name: The client.\n"
             "- PVU Estimate: Estimated PVU details."

@@ -8,11 +8,11 @@ class DefineAdmin(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines an **Administrator** account with specific privileges.\n"
+            "- Description: Defines an **Administrator** account with specific privileges.\n\n"
             "**Input Parameters**:\n"
             "- admin_name (Required): The name of the administrator.\n"
             "- password (Required): The password for the administrator.\n"
-            "- contact (Optional): Contact information.\n"
+            "- contact (Optional): Contact information.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the administrator was defined."
         )
@@ -40,11 +40,11 @@ class UpdateUser(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates an **Administrator** account (System User). Modify password or contact info.\n"
+            "- Description: Updates an **Administrator** account (System User). Modify password or contact info.\n\n"
             "**Input Parameters**:\n"
             "- user_name (Required): The name of the administrator to update.\n"
             "- password (Optional): The new password.\n"
-            "- contact (Optional): New contact information.\n"
+            "- contact (Optional): New contact information.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the user was updated."
         )
@@ -72,10 +72,10 @@ class SetUserLock(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Locks or unlocks an **Administrator** account. Locked admins cannot log in.\n"
+            "- Description: Locks or unlocks an **Administrator** account. Locked admins cannot log in.\n\n"
             "**Input Parameters**:\n"
             "- user_name (Required): The name of the administrator.\n"
-            "- lock_status (Required): 'lock' to disable access, 'unlock' to enable access.\n"
+            "- lock_status (Required): 'lock' to disable access, 'unlock' to enable access.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the lock status was updated."
         )
@@ -100,10 +100,10 @@ class GrantAuthority(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Grants specific **Privilege Classes** to an administrator. Controls authorization level.\n"
+            "- Description: Grants specific **Privilege Classes** to an administrator. Controls authorization level.\n\n"
             "**Input Parameters**:\n"
             "- user_name (Required): The name of the administrator.\n"
-            "- classes (Required): Space-separated list of privilege classes (e.g., 'system policy storage').\n"
+            "- classes (Required): Space-separated list of privilege classes (e.g., 'system policy storage').\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the authority was granted."
         )
@@ -129,10 +129,10 @@ class RevokeAuthority(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Revokes specific **Privilege Classes** from an administrator.\n"
+            "- Description: Revokes specific **Privilege Classes** from an administrator.\n\n"
             "**Input Parameters**:\n"
             "- user_name (Required): The name of the administrator.\n"
-            "- classes (Required): Space-separated list of privilege classes to revoke.\n"
+            "- classes (Required): Space-separated list of privilege classes to revoke.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the authority was revoked."
         )
@@ -156,9 +156,10 @@ class RegisterLicense(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Registers a new **Software License** key from a specified file.\n"
+            "- Description: Registers a new **Software License** key from a specified file.\n\n"
             "**Input Parameters**:\n"
-            "- file_path (Required): The full path to the license file on the server.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- file_path (Required): The full path to the license file on the server.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the license was registered."
         )
@@ -181,9 +182,10 @@ class DeleteAdmin(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes an **Administrator** account.\n"
+            "- Description: Deletes an **Administrator** account.\n\n"
             "**Input Parameters**:\n"
-            "- admin_name (Required): The name of the administrator to delete.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- admin_name (Required): The name of the administrator to delete.\n\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the administrator was deleted."
         )
@@ -207,7 +209,7 @@ class QueryAdminUser(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display information about server administrators/users.\n\n"
+            "- Description: Display information about server administrators/users.\n\n"
             "**Input Parameters**:\n"
             "- admin_name (Optional): Administrator name.\n\n"
             "**Output Parameters**:\n"
@@ -240,7 +242,7 @@ class QueryLicenseInfo(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display software license compliance information.\n\n"
+            "- Description: Display software license compliance information.\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"

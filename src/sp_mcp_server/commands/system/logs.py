@@ -9,7 +9,7 @@ class QueryRecoveryLog(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display information about the transaction recovery log.\n\n"
+            "- Description: Display information about the transaction recovery log.\n\n"
             "**Input Parameters**:\n"
             "- format (Optional): Level of detail (standard, detailed).\n\n"
             "**Output Parameters**:\n"
@@ -47,7 +47,7 @@ class QueryEnabledEvents(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query which system events are currently enabled for logging or alerting.\n\n"
+            "- Description: Query which system events are currently enabled for logging or alerting.\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"
@@ -74,7 +74,7 @@ class QueryEventRules(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query configured event rules which filter or direct specific events.\n\n"
+            "- Description: Query configured event rules which filter or direct specific events.\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"
@@ -100,7 +100,7 @@ class QueryEventReceiver(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Query configured event receivers (destinations for events).\n\n"
+            "- Description: Query configured event receivers (destinations for events).\n\n"
             "**Input Parameters**:\n"
             "- None.\n\n"
             "**Output Parameters**:\n"

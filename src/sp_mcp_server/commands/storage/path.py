@@ -9,7 +9,7 @@ class DefinePath(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Data Path** allowing communication between a source and destination.\n"
+            "- Description: Defines a **Data Path** allowing communication between a source and destination.\n"
             "**Input Parameters**:\n"
             "- source_name (Required): Name of the source (e.g., Server Name).\n"
             "- destination_name (Required): Name of the destination (e.g., Drive Name).\n"
@@ -51,7 +51,7 @@ class UpdateDataPath(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Update the data path between a source (like a server or data mover) and a destination (drive, library) to allow data transfer.\n"
+            "- Description: Update the data path between a source (like a server or data mover) and a destination (drive, library) to allow data transfer.\n"
             "**Input Parameters**:\n"
             "- source_name (Required): Name of the source (e.g., server name).\n"
             "- destination_name (Required): Name of the destination (e.g., drive name).\n"
@@ -89,13 +89,15 @@ class UpdatePath(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Updates a **Path** definition.\n"
+            "- Description: Update the data path between a source (like a server or data mover) and a destination (drive, library) to allow data transfer.\n"
             "**Input Parameters**:\n"
-            "- source_name (Required): Source name (e.g., Server).\n"
-            "- destination_name (Required): Destination name (e.g., Drive/Library).\n"
-            "- source_type (Required): Source type (SERVER/DATAMOVER).\n"
-            "- destination_type (Required): Destination type (LIBRARY/DRIVE).\n"
-            "- online (Optional): 'YES' or 'NO'.\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- source_name (Required): Name of the source (e.g., server name).\n"
+            "- destination_name (Required): Name of the destination (e.g., drive name).\n"
+            "- source_type (Required): Type of source (e.g., SERVER, DATAMOVER).\n"
+            "- destination_type (Required): Type of destination (e.g., DRIVE, LIBRARY).\n"
+            "- library (Optional): Name of the library (required for drive paths).\n"
+            "- online (Optional): 'Yes' or 'No' to set path availability.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the path was updated."
         )
@@ -126,7 +128,7 @@ class DeletePath(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Deletes a **Path** definition.\n"
+            "- Description: Deletes a **Path** definition.\n"
             "**Input Parameters**:\n"
             "- source_name (Required): Source name.\n"
             "- destination_name (Required): Destination name.\n"
@@ -161,10 +163,10 @@ class QueryDataPath(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display information about data paths between source and destination.\n\n"
+            "- Description: Display information about data paths between source and destination.\n"
             "**Input Parameters**:\n"
             "- source_name (Optional): Name of the source component.\n"
-            "- destination_name (Optional): Name of the destination component.\n\n"
+            "- destination_name (Optional): Name of the destination component.\n"
             "**Output Parameters**:\n"
             "- Source Name: The source of the path (e.g., Server Name).\n"
             "- Source Type: Type of source (e.g., SERVER).\n"
