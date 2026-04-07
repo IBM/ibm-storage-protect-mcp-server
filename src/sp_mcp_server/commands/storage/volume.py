@@ -11,12 +11,8 @@ class DefineVolume(BaseCommand):
         return (
             "- Description: Defines a **Storage Unit** (known as a **Volume** in SP) within a Storage Pool. Represents a specific disk, file, or tape.\n"
             "**Input Parameters**:\n"
-<<<<<<< HEAD
-            "- pool_name (Required): The name of the parent Storage Target.\n"
-=======
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
             "- pool_name (Required): The name of the parent Storage Pool.\n"
->>>>>>> 98bb007 (Updated tools descriptions)
             "- volume_name (Required): Unique identifier/path for the volume.\n"
             "- access (Optional): Availability mode (e.g., 'READWRITE', 'READONLY').\n"
             "**Output Parameters**:\n"
@@ -185,12 +181,8 @@ class QueryVolumeHistory(BaseCommand):
         return (
             "- Description: Display historical records of sequential volume usage (e.g., Database Backups).\n"
             "**Input Parameters**:\n"
-<<<<<<< HEAD
-            "- type (Optional): Type of history to query (e.g., DBBACKUP, EXPORT, RPFILE).\n\n"
-=======
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
             "- type (Optional): Type of history to query (e.g., DBBACKUP, EXPORT, RPFILE).\n"
->>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- Date/Time: When the volume was written.\n"
             "- Volume Name: The name of the volume.\n"
@@ -222,12 +214,8 @@ class QuerySequentialMedia(BaseCommand):
         return (
             "- Description: Query sequential-access media associated with a storage container.\n"
             "**Input Parameters**:\n"
-<<<<<<< HEAD
-            "- container_name (Optional): Storage container name.\n\n"
-=======
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
             "- container_name (Optional): Storage container name.\n"
->>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- Volume Name: The media volume.\n"
             "- State: Mountable or not.\n"
@@ -259,11 +247,7 @@ class QueryMountedVolumes(BaseCommand):
         return (
             "- Description: Display information on currently mounted sequential access volumes.\n"
             "**Input Parameters**:\n"
-<<<<<<< HEAD
-            "- None.\n\n"
-=======
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
->>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- Volume Name: The mounted volume.\n"
             "- Drive Name: The drive it is mounted in.\n"
@@ -290,11 +274,7 @@ class QueryRecoveryMedia(BaseCommand):
         return (
             "- Description: Query media needed for disaster recovery.\n"
             "**Input Parameters**:\n"
-<<<<<<< HEAD
-            "- None.\n\n"
-=======
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
->>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- Volume Name: The media volume.\n"
             "- Storage Pool Name: The associated container."
@@ -320,12 +300,8 @@ class QueryRetentionMedia(BaseCommand):
         return (
             "- Description: Query media moving between retention states (e.g., Vault to Onsite).\n"
             "**Input Parameters**:\n"
-<<<<<<< HEAD
-            "- days (Optional): Number of days matching criteria.\n\n"
-=======
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
             "- days (Optional): Number of days matching criteria.\n"
->>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- Volume Name: The media volume.\n"
             "- State: Current retention state.\n"
@@ -357,14 +333,9 @@ class QueryBackupTOC(BaseCommand):
         return (
             "- Description: Display the Table of Contents (TOC) for a backup image, listing files within it.\n"
             "**Input Parameters**:\n"
-<<<<<<< HEAD
-            "- client_name (Optional): Client name.\n"
-            "- backup_set_name (Optional): Backup set/File space name.\n\n"
-=======
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
             "- client_name (Optional): Node name.\n"
             "- backup_set_name (Optional): Backup set/File space name.\n"
->>>>>>> 98bb007 (Updated tools descriptions)
             "**Output Parameters**:\n"
             "- File Name: Name of the file in the backup.\n"
             "- Size: Size of the file.\n"
