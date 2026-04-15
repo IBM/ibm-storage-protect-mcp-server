@@ -9,7 +9,7 @@ class DefineManagementClass(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Defines a **Management Class** (policy object within a Policy Set). A management class is the binding point users apply to individual files or objects to specify how they are managed; it contains one or more Copy Groups that define versioning and retention behavior.\n"
+            "Defines a **Management Class** (also known as a Retention Policy in IBM SP terminology). A management class is the binding point users apply to individual files or objects to specify how they are managed; it contains one or more Copy Groups that define versioning and retention behavior.\n"
             "**Input Parameters**:\n"
             "- domain_name (Required): Parent Policy Domain.\n"
             "- policy_set_name (Required): Parent Policy Set.\n"

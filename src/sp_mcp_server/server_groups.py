@@ -211,7 +211,18 @@ ISP_OPS_MAINTENANCE = [
     # Diag / Offline
     off_cmd.QueryOfflineDBSpace,
     off_cmd.QueryOfflineLog,
-    mon_cmd.RunServerMon
+    mon_cmd.RunServerMon,
+    # Logs and Events
+    ops.QueryEventLog,
+    sys_cmd.QueryRecoveryLog,
+    sys_cmd.QueryEnabledEvents,
+    sys_cmd.QueryEventRules,
+    sys_cmd.QueryEventReceiver,
+    # Jobs
+    ops.QueryBackgroundJob,
+    ops.QueryExportJob,
+    ops.QueryMaintenanceJob,
+    ops.QueryRestoreJob
 ]
 
 # 12. mcp-server-ops-rules (~12 tools)
@@ -232,4 +243,124 @@ ISP_OPS_RULES = [
     ops.DefineStatusThreshold,
     ops.UpdateStatusThreshold,
     ops.DeleteStatusThreshold
+]
+
+
+
+# ==========================================
+# ADDITIONAL OPERATION GROUPS (for main_ops.py)
+# ==========================================
+
+# ISP_LOGS - Log and event management
+ISP_LOGS = [
+    ops.QueryEventLog,
+    sys_cmd.QueryRecoveryLog,
+    sys_cmd.QueryEnabledEvents,
+    sys_cmd.QueryEventRules,
+    sys_cmd.QueryEventReceiver
+]
+
+# ISP_JOBS - Background job monitoring
+ISP_JOBS = [
+    ops.QueryBackgroundJob,
+    ops.QueryExportJob,
+    ops.QueryMaintenanceJob,
+    ops.QueryRestoreJob
+]
+
+# ISP_ALERTS - Alert management
+ISP_ALERTS = [
+    ops.DefineAlertTrigger,
+    ops.UpdateAlertTrigger,
+    ops.DeleteAlertTrigger,
+    ops.UpdateAlertStatus,
+    ops.QueryAlertTrigger,
+    ops.QueryAlertStatus
+]
+
+# ISP_BACKUPSET - Backup set management
+ISP_BACKUPSET = [
+    ops.DefineBackupSet,
+    ops.UpdateBackupSet,
+    ops.DeleteBackupSet
+]
+
+# ISP_CATALOG - Catalog operations
+ISP_CATALOG = [
+    ops.ProtectCatalog,
+    ops.RestoreCatalog
+]
+
+# ISP_DATA_MOVEMENT - Data movement operations
+ISP_DATA_MOVEMENT = [
+    ops.MoveDataContainer,
+    ops.MoveClientData,
+    ops.MigrateStorageTarget,
+    ops.ReclaimStorageSpace
+]
+
+# ISP_DR - Disaster recovery operations
+ISP_DR = [
+    ops.BackupDB,
+    ops.RestoreDB,
+    ops.QueryDRStatus,
+    ops.QueryDRMedia,
+    ops.QueryRecoveryPlanFile,
+    ops.QueryRecoveryPlanFileContent
+]
+
+# ISP_FILESYSTEM - Filesystem and virtual mapping
+ISP_FILESYSTEM = [
+    ops.DefineObjectDomain,
+    ops.DefineVirtualFSMapping,
+    ops.UpdateVirtualFSMapping,
+    ops.DeleteVirtualFSMapping
+]
+
+# ISP_MEDIA - Recovery media management
+ISP_MEDIA = [
+    ops.DefineRecoveryMedia,
+    ops.UpdateRecoveryMedia,
+    ops.DeleteRecoveryMedia
+]
+
+# ISP_REPLICATION - Replication monitoring
+ISP_REPLICATION = [
+    ops.QueryProtectionStatus,
+    ops.QueryReplicationFailures,
+    ops.QueryReplicationStatus,
+    ops.QueryReplicationRule,
+    ops.QueryReplicationServer
+]
+
+# ISP_RULES - Storage and automation rules
+ISP_RULES = [
+    ops.DefineStorageRule,
+    ops.UpdateStorageRule,
+    ops.DeleteStorageRule,
+    ops.QueryStorageRule,
+    ops.DefineSpaceTrigger,
+    ops.UpdateSpaceTrigger,
+    ops.DeleteSpaceTrigger,
+    ops.DefineStatusThreshold,
+    ops.UpdateStatusThreshold,
+    ops.DeleteStatusThreshold,
+    ops.DefineSubRule,
+    ops.UpdateSubRule,
+    ops.DeleteSubRule,
+    ops.DefineHold,
+    ops.DeleteHold,
+    ops.DefineRetentionRule
+]
+
+# ISP_MISC_OPS - Miscellaneous operations
+ISP_MISC_OPS = [
+    ops.DefineScratchPadEntry,
+    ops.UpdateScratchPadEntry,
+    ops.DeleteScratchPadEntry,
+    ops.QueryPendingCommand,
+    ops.QueryProfile,
+    ops.QueryUserRequest,
+    ops.UpdateCollocationGroup,
+    ops.DefineClientAction
 ]

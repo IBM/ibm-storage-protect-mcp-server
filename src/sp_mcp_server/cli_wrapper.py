@@ -35,6 +35,10 @@ class DsmAdmcWrapper:
             f"-PA={self.config.admin_password}",
             "-COMMAdelimited" # Use comma delimited for easier parsing
         ]
+        
+        # Note: We don't add -SE parameter here because dsmadmc will use
+        # the default server from dsm.sys or environment. The TCPSERVERADDRESS
+        # environment variable is used by the TSM client to find the server.
 
         # Append the actual query command
         # command should be something like "QUERY SESSION" or "QUERY STATUS"

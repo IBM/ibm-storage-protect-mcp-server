@@ -65,11 +65,13 @@ class QueryReplicationStatus(BaseCommand):
             "Query active node replication processes.\n\n"
             "**Input Parameters**:\n"
             "- isp_server_name (Optional): Target ISP Server name from registry.\n"
-            "- client_name (Optional): Node name to filter.\n\n"
+            "- node_name (Required): Node name to query replication status for.\n\n"
             "**Output Parameters**:\n"
             "- Node Name: Node being replicated.\n"
             "- Bytes Replicated: Data moved.\n"
-            "- Status: Current activity."
+            "- Status: Current activity.\n\n"
+            "**Note**: IBM Storage Protect requires a node name for QUERY REPLICATION. "
+            "If no active replication is found for the specified node, the command returns 'No match found'."
         )
 
     @property
@@ -78,15 +80,16 @@ class QueryReplicationStatus(BaseCommand):
             "type": "object",
             "properties": {
                 "isp_server_name": {"type": "string", "description": "Target ISP Server name from registry (optional)."},
-
-                "node_name": {"type": "string", "description": "Node name."}
-            }
+                "node_name": {"type": "string", "description": "Node name (required)."}
+            },
+            "required": ["node_name"]
         }
 
     def execute(self, arguments: Dict[str, Any]) -> str:
-        cmd = "QUERY REPLICATION"
-        if arguments.get("node_name"):
-            cmd += f" {arguments['node_name']}"
+        node_name = arguments.get("node_name")
+        if not node_name:
+            return "Error: node_name parameter is required for QUERY REPLICATION command."
+        cmd = f"QUERY REPLICATION {node_name}"
         return self._execute_simple_query(cmd)
 
 class QueryReplicationRule(BaseCommand):
