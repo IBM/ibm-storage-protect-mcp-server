@@ -1,6 +1,18 @@
 from typing import Any, Dict
 from ..base import BaseCommand
 
+__all__ = [
+    'DefineScratchPadEntry',
+    'UpdateScratchPadEntry',
+    'DeleteScratchPadEntry',
+    'QueryActivityLog',
+    'QueryPendingCommand',
+    'QueryProfile',
+    'QueryUserRequest',
+    'UpdateCollocationGroup'
+]
+
+
 class DefineScratchPadEntry(BaseCommand):
     @property
     def name(self) -> str:
@@ -80,15 +92,17 @@ class DeleteScratchPadEntry(BaseCommand):
     def execute(self, arguments: Dict[str, Any]) -> str:
         return self._execute_simple_query(f"DELETE SCRATCHPADENTRY {arguments['object']}")
 
-class QueryEventLog(BaseCommand):
+class QueryActivityLog(BaseCommand):
     @property
     def name(self) -> str:
-        return "query_event_log"
+        return "query_activity_log"
 
     @property
     def description(self) -> str:
         return (
-            "Display messages from the server activity/audit log.\n\n"
+            "Display messages from the server activity/audit log using QUERY ACTLOG command.\n\n"
+            "**IBM SP Command**: QUERY ACTLOG\n"
+            "**Purpose**: Search the activity log for administrative commands, system messages, and audit events.\n\n"
             "**Input Parameters**:\n"
             "- search (Optional): Search string to filter messages.\n"
             "- begintime (Optional): Start time (e.g. 08:00).\n"
@@ -96,7 +110,8 @@ class QueryEventLog(BaseCommand):
             "**Output Parameters**:\n"
             "- Date/Time: When the event occurred.\n"
             "- Message: The log message content.\n"
-            "- Severity: Level of importance (Info, Warning, Error)."
+            "- Severity: Level of importance (Info, Warning, Error).\n\n"
+            "**Note**: For scheduled event status, use 'query_scheduled_event' tool instead (QUERY EVENT)."
         )
 
     @property

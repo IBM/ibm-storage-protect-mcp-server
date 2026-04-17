@@ -301,3 +301,101 @@ class QueryContainerDirectory(BaseCommand):
         if arguments.get("container_name"):
             cmd += f" {arguments['container_name']}"
         return self._execute_simple_query(cmd)
+
+
+class QueryOccupancy(BaseCommand):
+    @property
+    def name(self) -> str:
+        return "query_occupancy"
+
+    @property
+    def description(self) -> str:
+        return (
+            "- Description: Shows where client file spaces are stored and how much space they occupy in storage pools.\n"
+            "**Input Parameters**:\n"
+            "- isp_server_name (Optional): Target ISP Server name from registry.\n"
+            "- node_name (Optional): Node that owns the file spaces. Wildcards supported. If omitted, all nodes are queried.\n"
+            "- file_space_name (Optional): File space to locate. Wildcards supported. Requires node_name if specified.\n"
+            "- stgpool (Optional): Storage pool to query. Wildcards supported. If omitted, all storage pools are queried.\n"
+            "- devclass (Optional): Device class associated with storage devices. Wildcards supported.\n"
+            "- type (Optional): Types of files to query (ANY, Backup, Archive, SPacem). Default: ANY.\n"
+            "- nametype (Optional): How server interprets file space names (SERVER, UNIcode, FSID). Default: SERVER.\n"
+            "- codetype (Optional): Code page type for file space names (BOTH, UNIcode, NONUNIcode). Default: BOTH.\n"
+            "**Output Parameters**:\n"
+            "- Node Name: The node that owns the file space.\n"
+            "- Type: The type of data (Arch, Bkup, or SpMg).\n"
+            "- Filespace Name: The name of the file space.\n"
+            "- FSID: The file space ID assigned by the server.\n"
+            "- Storage Pool Name: The storage pool where the file space is located.\n"
+            "- Number of Files: The number of logical files stored.\n"
+            "- Physical Space Occupied (MB): Physical space occupied (includes empty space within aggregates).\n"
+            "- Logical Space Occupied (MB): Space occupied by logical files (excludes empty space)."
+        )
+
+    @property
+    def args_schema(self) -> Dict[str, Any]:
+        return {
+            "type": "object",
+            "properties": {
+                "node_name": {
+                    "type": "string",
+                    "description": "Node that owns the file spaces. Wildcards supported."
+                },
+                "file_space_name": {
+                    "type": "string",
+                    "description": "File space to locate. Wildcards supported. Requires node_name."
+                },
+                "stgpool": {
+                    "type": "string",
+                    "description": "Storage pool to query. Wildcards supported."
+                },
+                "devclass": {
+                    "type": "string",
+                    "description": "Device class associated with storage devices. Wildcards supported."
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["ANY", "Backup", "Archive", "SPacem"],
+                    "default": "ANY",
+                    "description": "Types of files to query in the file spaces."
+                },
+                "nametype": {
+                    "type": "string",
+                    "enum": ["SERVER", "UNIcode", "FSID"],
+                    "default": "SERVER",
+                    "description": "How server interprets file space names."
+                },
+                "codetype": {
+                    "type": "string",
+                    "enum": ["BOTH", "UNIcode", "NONUNIcode"],
+                    "default": "BOTH",
+                    "description": "Code page type for file space names."
+                }
+            }
+        }
+
+    def execute(self, arguments: Dict[str, Any]) -> str:
+        cmd = "QUERY OCCUPANCY"
+        
+        if arguments.get("node_name"):
+            cmd += f" {arguments['node_name']}"
+            
+        if arguments.get("file_space_name"):
+            cmd += f" {arguments['file_space_name']}"
+            
+        if arguments.get("stgpool"):
+            cmd += f" STGPOOL={arguments['stgpool']}"
+            
+        if arguments.get("devclass"):
+            cmd += f" DEVCLASS={arguments['devclass']}"
+            
+        if arguments.get("type"):
+            cmd += f" TYPE={arguments['type']}"
+            
+        if arguments.get("nametype"):
+            cmd += f" NAMETYPE={arguments['nametype']}"
+            
+        if arguments.get("codetype"):
+            cmd += f" CODETYPE={arguments['codetype']}"
+        
+        return self._execute_simple_query(cmd)

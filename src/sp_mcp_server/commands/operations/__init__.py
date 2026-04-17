@@ -48,7 +48,7 @@ from .misc import (
     DefineScratchPadEntry,
     UpdateScratchPadEntry,
     DeleteScratchPadEntry,
-    QueryEventLog,
+    QueryActivityLog,
     QueryPendingCommand,
     QueryProfile,
     QueryUserRequest,

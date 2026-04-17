@@ -19,6 +19,12 @@ ISP_CLIENTS_CORE = [
     cli_cmd.RenameClient,       # NEW (RenameNode)
     cli_cmd.SetClientLock,      # NEW (LockNode/UnlockNode)
     cli_cmd.QueryClient,
+    cli_cmd.QueryActiveSession,
+    cli_cmd.QueryDataOccupancy,
+    cli_cmd.QueryAuditDataOccupancy,
+    cli_cmd.QueryClientBackupVolume,
+    cli_cmd.QueryVirtualMountPoint,
+    cli_cmd.QueryClientDataPlacement,
     cli_cmd.DefineNodeGroup,
     cli_cmd.UpdateNodeGroup,
     cli_cmd.DeleteNodeGroup,
@@ -55,6 +61,7 @@ ISP_STORAGE_POOLS = [
     stg_cmd.DeleteStoragePool,
     stg_cmd.DefineStoragePoolDirectory,
     stg_cmd.QueryStorageContainer,
+    stg_cmd.QueryOccupancy,
     stg_cmd.DefineVolume,
     stg_cmd.UpdateVolume,
     stg_cmd.DeleteVolume,
@@ -135,7 +142,8 @@ ISP_POLICIES_MANAGEMENT = [
     pol_cmd.DefineSchedule,
     pol_cmd.UpdateSchedule,
     pol_cmd.DeleteSchedule,
-    pol_cmd.QuerySchedule
+    pol_cmd.QuerySchedule,
+    pol_cmd.QueryScheduledEvent
 ]
 
 # ==========================================
@@ -213,7 +221,7 @@ ISP_OPS_MAINTENANCE = [
     off_cmd.QueryOfflineLog,
     mon_cmd.RunServerMon,
     # Logs and Events
-    ops.QueryEventLog,
+    ops.QueryActivityLog,
     sys_cmd.QueryRecoveryLog,
     sys_cmd.QueryEnabledEvents,
     sys_cmd.QueryEventRules,
@@ -253,7 +261,7 @@ ISP_OPS_RULES = [
 
 # ISP_LOGS - Log and event management
 ISP_LOGS = [
-    ops.QueryEventLog,
+    ops.QueryActivityLog,
     sys_cmd.QueryRecoveryLog,
     sys_cmd.QueryEnabledEvents,
     sys_cmd.QueryEventRules,

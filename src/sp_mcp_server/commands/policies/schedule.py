@@ -163,19 +163,26 @@ class QueryScheduledEvent(BaseCommand):
     @property
     def description(self) -> str:
         return (
-            "Display results and status of past or projected future scheduled events.\n\n"
+            "Display results and status of past or projected future scheduled events using QUERY EVENT command.\n\n"
+            "**IBM SP Command**: QUERY EVENT\n"
+            "**Purpose**: Show scheduled backup/archive event execution history and status.\n\n"
             "**Input Parameters**:\n"
-            "- policy_group (Optional): Policy group.\n"
-            "- schedule_name (Optional): Schedule name.\n"
-            "- begindate (Optional): Filter start date.\n"
-            "- starttime (Optional): Filter start time.\n"
-            "- enddate (Optional): Filter end date.\n"
-            "- endtime (Optional): Filter end time.\n\n"
+            "- policy_group (Optional): Policy domain name (e.g., 'STANDARD').\n"
+            "- schedule_name (Optional): Schedule name (e.g., 'VMWARE_MSWINDOWS00007_TUCSON_L').\n"
+            "- begindate (Optional): Filter start date (MM/DD/YYYY).\n"
+            "- starttime (Optional): Filter start time (HH:MM:SS).\n"
+            "- enddate (Optional): Filter end date (MM/DD/YYYY).\n"
+            "- endtime (Optional): Filter end time (HH:MM:SS).\n\n"
             "**Output Parameters**:\n"
             "- Scheduled Start: Planned execution time.\n"
             "- Actual Start: When it really ran.\n"
-            "- Status: Missed, Completed, Failed, Future.\n"
-            "- Result: Return code."
+            "- Schedule Name: Name of the schedule.\n"
+            "- Node Name: Client node name.\n"
+            "- Status: Started, Completed, Missed, Failed, Future.\n"
+            "- Result: Return code.\n\n"
+            "**Usage Example**: To query events for schedule 'VMWARE_MSWINDOWS00007_TUCSON_L' in domain 'STANDARD':\n"
+            "  policy_group='STANDARD', schedule_name='VMWARE_MSWINDOWS00007_TUCSON_L'\n\n"
+            "**Note**: For activity log messages, use 'query_activity_log' tool instead (QUERY ACTLOG)."
         )
 
     @property
