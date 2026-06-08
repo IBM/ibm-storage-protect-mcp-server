@@ -103,19 +103,8 @@ class QueryActivityLog(BaseCommand):
             "Display messages from the server activity/audit log using QUERY ACTLOG command.\n\n"
             "**IBM SP Command**: QUERY ACTLOG\n"
             "**Purpose**: Search the activity log for administrative commands, system messages, and audit events.\n\n"
-            "**IMPORTANT - Avoid Large Result Sets**:\n"
-            "Activity logs can be very large. ALWAYS use SEARCH parameter with date filters to avoid 'context condensed' errors.\n"
-            "Without filters, queries may return thousands of messages causing response truncation.\n\n"
-            "**Best Practices for Targeted Queries**:\n"
-            "- Critical errors (last 24h): SEARCH=ANE* BEGINDATE=<yesterday>\n"
-            "- DB backup failures (last 3 days): SEARCH=ANR2968E BEGINDATE=<3-days-ago>\n"
-            "- Server errors (last 2 days): SEARCH=ANR0551E BEGINDATE=<2-days-ago>\n"
-            "- Storage warnings (if needed): SEARCH=ANR1* BEGINDATE=<yesterday>\n"
-            "- Specific node activity: SEARCH=<nodename> BEGINDATE=<date>\n\n"
             "**Input Parameters**:\n"
-            "- search (Optional but RECOMMENDED): Search string to filter messages (e.g., ANR*, ANE*, message ID, node name).\n"
-            "- begindate (Optional but RECOMMENDED): Start date (e.g. 2024-01-15 or MM/DD/YYYY).\n"
-            "- enddate (Optional): End date (e.g. 2024-01-20 or MM/DD/YYYY).\n"
+            "- search (Optional): Search string to filter messages.\n"
             "- begintime (Optional): Start time (e.g. 08:00).\n"
             "- endtime (Optional): End time (e.g. 18:00).\n\n"
             "**Output Parameters**:\n"
@@ -131,8 +120,6 @@ class QueryActivityLog(BaseCommand):
             "type": "object",
             "properties": {
                 "search": {"type": "string", "description": "Search string to filter messages."},
-                "begindate": {"type": "string", "description": "Start date (e.g. 2024-01-15 or MM/DD/YYYY)."},
-                "enddate": {"type": "string", "description": "End date (e.g. 2024-01-20 or MM/DD/YYYY)."},
                 "begintime": {"type": "string", "description": "Start time (e.g. 08:00)."},
                 "endtime": {"type": "string", "description": "End time (e.g. 18:00)."}
             }
@@ -142,14 +129,8 @@ class QueryActivityLog(BaseCommand):
         cmd = "QUERY ACTLOG"
         if arguments.get("search"):
             cmd += f" SEARCH={arguments['search']}"
-        if arguments.get("begindate"):
-            cmd += f" BEGINDATE={arguments['begindate']}"
-        if arguments.get("enddate"):
-            cmd += f" ENDDATE={arguments['enddate']}"
         if arguments.get("begintime"):
             cmd += f" BEGINTIME={arguments['begintime']}"
-        if arguments.get("endtime"):
-            cmd += f" ENDTIME={arguments['endtime']}"
         return self._execute_simple_query(cmd)
 
 class QueryPendingCommand(BaseCommand):
