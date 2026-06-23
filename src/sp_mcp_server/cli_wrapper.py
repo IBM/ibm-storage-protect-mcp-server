@@ -47,7 +47,9 @@ class DsmAdmcWrapper:
         args.extend(cmd_parts)
 
         try:
-            logger.info(f"Executing command: {command}")
+            logger.info(f"Executing dsmadmc command: {command}")
+            logger.debug(f"Full command args: {' '.join(args[:6])} [credentials hidden] {' '.join(cmd_parts)}")
+            
             # Run the command
             process = subprocess.run(
                 args,
@@ -56,11 +58,23 @@ class DsmAdmcWrapper:
                 check=False # We don't want to raise on non-zero exit, we handle it
             )
             
+            # Log execution results
+            if process.returncode == 0:
+                logger.info(f"Command executed successfully. Output length: {len(process.stdout)} chars")
+                logger.debug(f"Command output: {process.stdout[:500]}...")  # Log first 500 chars
+            else:
+                logger.error(f"Command failed with return code {process.returncode}")
+                logger.error(f"Error output: {process.stderr}")
+                if process.stdout:
+                    logger.debug(f"Stdout: {process.stdout}")
+            
             return process.stdout, process.stderr, process.returncode
             
         except FileNotFoundError:
+            logger.error("dsmadmc executable not found in PATH")
             return "", "dsmadmc executable not found. Please ensure it is in your PATH.", 127
         except Exception as e:
+            logger.exception(f"Unexpected error executing command: {e}")
             return "", str(e), 1
 
 class DsmServWrapper:

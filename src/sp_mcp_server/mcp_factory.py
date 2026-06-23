@@ -1,7 +1,9 @@
 from __future__ import annotations
 import asyncio
 import sys
+import os
 import logging
+from logging.handlers import RotatingFileHandler
 import inspect
 from typing import Any, Sequence, List
 from mcp.server import Server
@@ -12,9 +14,58 @@ from .config import load_config
 from .cli_wrapper import DsmAdmcWrapper, DsmServWrapper, ServermonWrapper
 from .commands.base import BaseCommand, BaseOfflineCommand, BaseServermonCommand
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, stream=sys.stderr)
-logger = logging.getLogger("ibm-sp-mcp-server")
+# Configure logging with both file and stderr output
+def setup_logging():
+    """Configure logging with file rotation and stderr output."""
+    # Get log file path from environment or use default
+    log_dir = os.environ.get("SP_MCP_LOG_DIR", "/var/log/ibm-sp-mcp-server")
+    log_file = os.path.join(log_dir, "mcp-server.log")
+    
+    # Create log directory if it doesn't exist
+    try:
+        os.makedirs(log_dir, exist_ok=True)
+    except (OSError, PermissionError) as e:
+        # If we can't create /var/log directory, fall back to /tmp
+        log_dir = "/tmp/ibm-sp-mcp-server"
+        log_file = os.path.join(log_dir, "mcp-server.log")
+        os.makedirs(log_dir, exist_ok=True)
+    
+    # Create formatters
+    detailed_formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    simple_formatter = logging.Formatter('%(levelname)s: %(message)s')
+    
+    # File handler with rotation (10MB max, keep 5 backups)
+    file_handler = RotatingFileHandler(
+        log_file,
+        maxBytes=10*1024*1024,  # 10MB
+        backupCount=5,
+        encoding='utf-8'
+    )
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(detailed_formatter)
+    
+    # Console handler (stderr) - less verbose for console
+    console_handler = logging.StreamHandler(sys.stderr)
+    console_handler.setLevel(logging.INFO)
+    console_handler.setFormatter(simple_formatter)
+    
+    # Configure root logger
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.DEBUG)
+    root_logger.addHandler(file_handler)
+    root_logger.addHandler(console_handler)
+    
+    # Get our logger
+    logger = logging.getLogger("ibm-sp-mcp-server")
+    logger.info(f"Logging initialized. Log file: {log_file}")
+    
+    return logger
+
+# Initialize logging
+logger = setup_logging()
 
 def create_mcp_server(server_name: str, tool_classes: List[Any], allowed_modes: List[str] = None):
     """

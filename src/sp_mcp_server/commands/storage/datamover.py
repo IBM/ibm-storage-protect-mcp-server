@@ -15,6 +15,7 @@ class DefineDataMover(BaseCommand):
             "- type (Required): The protocol type (e.g., 'NAS').\n"
             "- hl_address (Required): High-level address (IP address or DNS name).\n"
             "- ll_address (Required): Low-level address (TCP Port).\n"
+            "- data_format (Required): Data format (e.g., 'NETAPPDUMP', 'NDMP').\n"
             "- user_id (Required): Username for authentication.\n"
             "- password (Required): Password for authentication.\n"
             "**Output Parameters**:\n"
@@ -30,15 +31,17 @@ class DefineDataMover(BaseCommand):
                 "type": {"type": "string", "description": "Mover type.", "enum": ["NAS", "NASCLUSTER", "TETRA"]},
                 "hl_address": {"type": "string", "description": "IP address."},
                 "ll_address": {"type": "string", "description": "Port number."},
+                "data_format": {"type": "string", "description": "Data format.", "enum": ["NETAPPDUMP", "NDMP"]},
                 "user_id": {"type": "string", "description": "User ID."},
                 "password": {"type": "string", "description": "Password."}
             },
-            "required": ["name", "type", "hl_address", "ll_address", "user_id", "password"]
+            "required": ["name", "type", "hl_address", "ll_address", "data_format", "user_id", "password"]
         }
         
     def execute(self, arguments: Dict[str, Any]) -> str:
         cmd = (f"DEFINE DATAMOVER {arguments['name']} TYPE={arguments['type']} "
                f"HLADDRESS={arguments['hl_address']} LLADDRESS={arguments['ll_address']} "
+               f"DATAFORMAT={arguments['data_format']} "
                f"USERID={arguments['user_id']} PASSWORD=\"{arguments['password']}\"")
         return self._execute_simple_query(cmd)
 

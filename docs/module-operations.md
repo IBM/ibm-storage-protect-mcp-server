@@ -283,8 +283,9 @@ Define a **Retention Rule** for managing long-term data retention (Retention Set
 Define a **Space Trigger** for a storage pool. Automatically expands the pool when space runs low.
 **Input Parameters**:
 - isp_server_name (Optional): Target ISP Server name from registry.
-- pool_name (Required): The name of the storage pool.
-- full_pct (Required): The utilization percentage to trigger expansion.
+- pool_name (Optional): The name of the storage pool. If omitted, applies to all pools.
+- full_pct (Optional): The utilization percentage to trigger expansion. Default: 80%.
+- space_expansion (Optional): The percentage to expand the pool by. Default: 20%.
 **Output Parameters**:
 - Result: Success message indicating the trigger was defined.
 
@@ -292,8 +293,9 @@ Define a **Space Trigger** for a storage pool. Automatically expands the pool wh
 Updates a **Space Trigger** for a storage pool.
 **Input Parameters**:
 - isp_server_name (Optional): Target ISP Server name from registry.
-- pool_name (Required): The storage pool name.
+- pool_name (Optional): The storage pool name. If omitted, updates global trigger.
 - full_pct (Optional): New full percentage threshold to trigger expansion.
+- space_expansion (Optional): New percentage to expand the pool by.
 **Output Parameters**:
 - Result: Success message indicating the trigger was updated.
 
@@ -301,7 +303,7 @@ Updates a **Space Trigger** for a storage pool.
 Deletes a **Space Trigger** from a storage pool.
 **Input Parameters**:
 - isp_server_name (Optional): Target ISP Server name from registry.
-- pool_name (Required): The storage pool name.
+- pool_name (Optional): The storage pool name. If omitted, deletes global trigger.
 **Output Parameters**:
 - Result: Success message indicating the trigger was deleted.
 
@@ -309,8 +311,11 @@ Deletes a **Space Trigger** from a storage pool.
 Define a **Status Threshold** definition for system monitoring. Sets conditions for health reporting.
 **Input Parameters**:
 - isp_server_name (Optional): Target ISP Server name from registry.
-- activity (Required): The system activity to monitor (e.g., DBBACKUP).
-- condition (Optional): The condition to check (e.g., EXISTENCE).
+- threshold_name (Required): The name of the threshold (max 48 chars).
+- activity (Required): The system activity to monitor. Valid values: PROCESSSUMMARY, SESSIONSUMMARY, CLIENTSESSIONSUMMARY, SCHEDCLIENTSESSIONSUMMARY, DBUTIL, DBFREESPACE, DBUSEDSPACE, ARCHIVELOGFREESPACE, STGPOOLUTIL, STGPOOLCAPACITY, AVGSTGPOOLUTIL, TOTSTGPOOLCAPACITY, TOTSTGPOOLS, TOTRWSTGPOOLS, TOTNOTRWSTGPOOLS, STGPOOLINUSEANDDEFINED, ACTIVELOGUTIL, ARCHLOGUTIL, CPYSTGPOOLUTIL, PMRYSTGPOOLUTIL, DEVCLASSPCTDRVOFFLINE, DEVCLASSPCTDRVPOLLING, DEVCLASSPCTLIBPATHSOFFLINE, DEVCLASSPCTPATHSOFFLINE, DEVCLASSPCTDISKSUNAVAILABLE, FILEDEVCLASSPCTSCRUNALLOCATABLE.
+- condition (Optional): The condition to check. Valid values: GT, GE, LT, LE, EQual, EXists. Default: EXists.
+- value (Optional): The threshold value. Required for GT, GE, LT, LE, EQual conditions. Not used with EXists.
+- status (Optional): The status to report when threshold is met. Valid values: Normal, Warning, Error. Default: Normal.
 **Output Parameters**:
 - Result: Success message indicating the threshold was defined.
 
@@ -318,8 +323,9 @@ Define a **Status Threshold** definition for system monitoring. Sets conditions 
 Updates a **Status Threshold** definition for system monitoring.
 **Input Parameters**:
 - isp_server_name (Optional): Target ISP Server name from registry.
-- activity (Required): The activity type to monitor.
-- condition (Optional): The condition indicating a status change (e.g., EXISTS, NOEXIST).
+- threshold_name (Required): The name of the threshold.
+- activity (Optional): The activity type to monitor.
+- condition (Optional): The condition type. Valid values: GT, GE, LT, LE, EQual, EXists.
 **Output Parameters**:
 - Result: Success message indicating the threshold was updated.
 
@@ -327,7 +333,7 @@ Updates a **Status Threshold** definition for system monitoring.
 Deletes a **Status Threshold** definition.
 **Input Parameters**:
 - isp_server_name (Optional): Target ISP Server name from registry.
-- activity (Required): The activity type.
+- threshold_name (Required): The name of the threshold.
 **Output Parameters**:
 - Result: Success message indicating the threshold was deleted.
 
@@ -440,21 +446,30 @@ Deletes a **Virtual File Space Mapping**.
 ### Recovery Media
 
 ### `DefineRecoveryMedia` (`define_recovery_media`)
-Define **Recovery Media** information about a source server's database backup volume.
+Define **Recovery Media** information for disaster recovery. Records details about media containing system recovery data.
 **Input Parameters**:
 - isp_server_name (Optional): Target ISP Server name from registry.
-- source_server (Required): The name of the source server.
-- volume_name (Required): The volume name containing the backup.
+- media_name (Required): The name of the recovery media (max 30 chars).
+- volume_names (Optional): Comma-separated list of volume names associated with this media.
+- description (Optional): Description of the media contents.
+- location (Optional): Physical location of the media.
+- media_type (Optional): Type of media. Valid values: BOOT, OTHER. Default: OTHER.
+- product (Optional): Product name associated with the media.
+- product_info (Optional): Additional product information.
 **Output Parameters**:
 - Result: Success message indicating the media was defined.
 
 ### `UpdateRecoveryMedia` (`update_recovery_media`)
-Updates the location of **Recovery Media**.
+Updates **Recovery Media** information.
 **Input Parameters**:
 - isp_server_name (Optional): Target ISP Server name from registry.
-- source_server (Required): The source server.
-- volume_name (Required): The volume name.
-- location (Required): The new physical location description.
+- media_name (Required): The recovery media name.
+- volume_names (Optional): New comma-separated list of volume names.
+- description (Optional): New description.
+- location (Optional): New physical location.
+- media_type (Optional): New media type. Valid values: BOOT, OTHER.
+- product (Optional): New product name.
+- product_info (Optional): New product information.
 **Output Parameters**:
 - Result: Success message indicating the media was updated.
 
@@ -462,8 +477,7 @@ Updates the location of **Recovery Media**.
 Deletes **Recovery Media** information.
 **Input Parameters**:
 - isp_server_name (Optional): Target ISP Server name from registry.
-- source_server (Required): The source server.
-- volume_name (Required): The volume name.
+- media_name (Required): The recovery media name.
 **Output Parameters**:
 - Result: Success message indicating the media was deleted.
 

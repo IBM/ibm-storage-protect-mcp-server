@@ -28,7 +28,7 @@ class DefineAdmin(BaseCommand):
             "required": ["admin_name", "password"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        cmd = f"DEFINE ADMIN {arguments['admin_name']} {arguments['password']}"
+        cmd = f"REGISTER ADMIN {arguments['admin_name']} {arguments['password']}"
         if arguments.get("contact"):
             cmd += f" CONTACT=\"{arguments['contact']}\""
         return self._execute_simple_query(cmd)
@@ -199,7 +199,7 @@ class DeleteAdmin(BaseCommand):
             "required": ["admin_name"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        return self._execute_simple_query(f"DELETE ADMIN {arguments['admin_name']}")
+        return self._execute_simple_query(f"REMOVE ADMIN {arguments['admin_name']}")
 
 class QueryAdminUser(BaseCommand):
     @property

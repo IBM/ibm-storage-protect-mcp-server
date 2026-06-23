@@ -10,8 +10,9 @@ class DefineSpaceTrigger(BaseCommand):
         return (
             "Define a **Space Trigger** for a storage pool. Automatically expands the pool when space runs low.\n"
             "**Input Parameters**:\n"
-            "- pool_name (Required): The name of the storage pool.\n"
-            "- full_pct (Required): The utilization percentage to trigger expansion.\n"
+            "- pool_name (Optional): The name of the storage pool. If omitted, applies to all pools.\n"
+            "- full_pct (Optional): The utilization percentage to trigger expansion. Default: 80%.\n"
+            "- space_expansion (Optional): The percentage to expand the pool by. Default: 20%.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the trigger was defined."
         )
@@ -20,13 +21,21 @@ class DefineSpaceTrigger(BaseCommand):
         return {
             "type": "object",
             "properties": {
-                "pool_name": {"type": "string", "description": "Storage pool name."},
-                "full_pct": {"type": "integer", "description": "Full percentage threshold."}
+                "pool_name": {"type": "string", "description": "Storage pool name. If omitted, applies to all pools."},
+                "full_pct": {"type": "integer", "description": "Full percentage threshold (default 80%)."},
+                "space_expansion": {"type": "integer", "description": "Percentage to expand pool by (default 20%)."}
             },
-            "required": ["pool_name", "full_pct"]
+            "required": []
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        return self._execute_simple_query(f"DEFINE SPACETRIGGER {arguments['pool_name']} FULLPCT={arguments['full_pct']}")
+        cmd = "DEFINE SPACETRIGGER STG"
+        if arguments.get("full_pct") is not None:
+            cmd += f" FULLPCT={arguments['full_pct']}"
+        if arguments.get("space_expansion") is not None:
+            cmd += f" SPACEEXPANSION={arguments['space_expansion']}"
+        if arguments.get("pool_name"):
+            cmd += f" STGPOOL={arguments['pool_name']}"
+        return self._execute_simple_query(cmd)
 
 class UpdateSpaceTrigger(BaseCommand):
     @property
@@ -37,8 +46,9 @@ class UpdateSpaceTrigger(BaseCommand):
         return (
             "Updates a **Space Trigger** for a storage pool.\n"
             "**Input Parameters**:\n"
-            "- pool_name (Required): The storage pool name.\n"
+            "- pool_name (Optional): The storage pool name. If omitted, updates global trigger.\n"
             "- full_pct (Optional): New full percentage threshold to trigger expansion.\n"
+            "- space_expansion (Optional): New percentage to expand the pool by.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the trigger was updated."
         )
@@ -47,14 +57,20 @@ class UpdateSpaceTrigger(BaseCommand):
         return {
             "type": "object",
             "properties": {
-                "pool_name": {"type": "string", "description": "Pool name."},
-                "full_pct": {"type": "integer", "description": "Full percentage."}
+                "pool_name": {"type": "string", "description": "Pool name. If omitted, updates global trigger."},
+                "full_pct": {"type": "integer", "description": "Full percentage threshold."},
+                "space_expansion": {"type": "integer", "description": "Percentage to expand pool by."}
             },
-            "required": ["pool_name"]
+            "required": []
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        cmd = f"UPDATE SPACETRIGGER {arguments['pool_name']}"
-        if arguments.get("full_pct"): cmd += f" FULLPCT={arguments['full_pct']}"
+        cmd = "UPDATE SPACETRIGGER STG"
+        if arguments.get("full_pct") is not None:
+            cmd += f" FULLPCT={arguments['full_pct']}"
+        if arguments.get("space_expansion") is not None:
+            cmd += f" SPACEEXPANSION={arguments['space_expansion']}"
+        if arguments.get("pool_name"):
+            cmd += f" STGPOOL={arguments['pool_name']}"
         return self._execute_simple_query(cmd)
 
 class DeleteSpaceTrigger(BaseCommand):
@@ -66,7 +82,7 @@ class DeleteSpaceTrigger(BaseCommand):
         return (
             "Deletes a **Space Trigger** from a storage pool.\n"
             "**Input Parameters**:\n"
-            "- pool_name (Required): The storage pool name.\n"
+            "- pool_name (Optional): The storage pool name. If omitted, deletes global trigger.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the trigger was deleted."
         )
@@ -75,12 +91,15 @@ class DeleteSpaceTrigger(BaseCommand):
         return {
             "type": "object",
             "properties": {
-                "pool_name": {"type": "string", "description": "Storage pool name."}
+                "pool_name": {"type": "string", "description": "Storage pool name. If omitted, deletes global trigger."}
             },
-            "required": ["pool_name"]
+            "required": []
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        return self._execute_simple_query(f"DELETE SPACETRIGGER {arguments['pool_name']}")
+        cmd = "DELETE SPACETRIGGER STG"
+        if arguments.get("pool_name"):
+            cmd += f" STGPOOL={arguments['pool_name']}"
+        return self._execute_simple_query(cmd)
 
 class DefineStatusThreshold(BaseCommand):
     @property
@@ -91,8 +110,11 @@ class DefineStatusThreshold(BaseCommand):
         return (
             "Define a **Status Threshold** definition for system monitoring. Sets conditions for health reporting.\n"
             "**Input Parameters**:\n"
-            "- activity (Required): The system activity to monitor (e.g., DBBACKUP).\n"
-            "- condition (Optional): The condition to check (e.g., EXISTENCE).\n"
+            "- threshold_name (Required): The name of the threshold (max 48 chars).\n"
+            "- activity (Required): The system activity to monitor. Valid values: PROCESSSUMMARY, SESSIONSUMMARY, CLIENTSESSIONSUMMARY, SCHEDCLIENTSESSIONSUMMARY, DBUTIL, DBFREESPACE, DBUSEDSPACE, ARCHIVELOGFREESPACE, STGPOOLUTIL, STGPOOLCAPACITY, AVGSTGPOOLUTIL, TOTSTGPOOLCAPACITY, TOTSTGPOOLS, TOTRWSTGPOOLS, TOTNOTRWSTGPOOLS, STGPOOLINUSEANDDEFINED, ACTIVELOGUTIL, ARCHLOGUTIL, CPYSTGPOOLUTIL, PMRYSTGPOOLUTIL, DEVCLASSPCTDRVOFFLINE, DEVCLASSPCTDRVPOLLING, DEVCLASSPCTLIBPATHSOFFLINE, DEVCLASSPCTPATHSOFFLINE, DEVCLASSPCTDISKSUNAVAILABLE, FILEDEVCLASSPCTSCRUNALLOCATABLE.\n"
+            "- condition (Optional): The condition to check. Valid values: GT, GE, LT, LE, EQual, EXists. Default: EXists.\n"
+            "- value (Optional): The threshold value. Required for GT, GE, LT, LE, EQual conditions. Not used with EXists.\n"
+            "- status (Optional): The status to report when threshold is met. Valid values: Normal, Warning, Error. Default: Normal.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the threshold was defined."
         )
@@ -101,14 +123,22 @@ class DefineStatusThreshold(BaseCommand):
         return {
             "type": "object",
             "properties": {
-                "activity": {"type": "string", "description": "Activity type (e.g. DBBACKUP)."},
-                "condition": {"type": "string", "description": "Condition (e.g. EXISTENCE)."}
+                "threshold_name": {"type": "string", "description": "Threshold name (max 48 characters)."},
+                "activity": {"type": "string", "description": "Activity type. Valid values: PROCESSSUMMARY, SESSIONSUMMARY, CLIENTSESSIONSUMMARY, SCHEDCLIENTSESSIONSUMMARY, DBUTIL, DBFREESPACE, DBUSEDSPACE, ARCHIVELOGFREESPACE, STGPOOLUTIL, STGPOOLCAPACITY, AVGSTGPOOLUTIL, etc."},
+                "condition": {"type": "string", "enum": ["GT", "GE", "LT", "LE", "EQual", "EXists"], "description": "Condition type. Default: EXists."},
+                "value": {"type": "number", "description": "Threshold value. Required for GT, GE, LT, LE, EQual conditions."},
+                "status": {"type": "string", "enum": ["Normal", "Warning", "Error"], "description": "Status to report. Default: Normal."}
             },
-            "required": ["activity"]
+            "required": ["threshold_name", "activity"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        cmd = f"DEFINE STATUSTHRESHOLD {arguments['activity']}"
-        if arguments.get("condition"): cmd += f" CONDITION={arguments['condition']}"
+        cmd = f"DEFINE STATUSTHRESHOLD {arguments['threshold_name']} {arguments['activity']}"
+        if arguments.get("condition"): 
+            cmd += f" CONDITION={arguments['condition']}"
+        if arguments.get("value") is not None: 
+            cmd += f" VALUE={arguments['value']}"
+        if arguments.get("status"): 
+            cmd += f" STATUS={arguments['status']}"
         return self._execute_simple_query(cmd)
 
 class UpdateStatusThreshold(BaseCommand):
@@ -120,8 +150,9 @@ class UpdateStatusThreshold(BaseCommand):
         return (
             "Updates a **Status Threshold** definition for system monitoring.\n"
             "**Input Parameters**:\n"
-            "- activity (Required): The activity type to monitor.\n"
-            "- condition (Optional): The condition indicating a status change (e.g., EXISTS, NOEXIST).\n"
+            "- threshold_name (Required): The name of the threshold.\n"
+            "- activity (Optional): The activity type to monitor.\n"
+            "- condition (Optional): The condition type. Valid values: GT, GE, LT, LE, EQual, EXists.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the threshold was updated."
         )
@@ -130,13 +161,15 @@ class UpdateStatusThreshold(BaseCommand):
         return {
             "type": "object",
             "properties": {
-                "activity": {"type": "string", "description": "Activity."},
-                "condition": {"type": "string", "description": "Condition."}
+                "threshold_name": {"type": "string", "description": "Threshold name."},
+                "activity": {"type": "string", "description": "Activity type."},
+                "condition": {"type": "string", "enum": ["GT", "GE", "LT", "LE", "EQual", "EXists"], "description": "Condition type."}
             },
-            "required": ["activity"]
+            "required": ["threshold_name"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        cmd = f"UPDATE STATUSTHRESHOLD {arguments['activity']}"
+        cmd = f"UPDATE STATUSTHRESHOLD {arguments['threshold_name']}"
+        if arguments.get("activity"): cmd += f" {arguments['activity']}"
         if arguments.get("condition"): cmd += f" CONDITION={arguments['condition']}"
         return self._execute_simple_query(cmd)
 
@@ -149,7 +182,7 @@ class DeleteStatusThreshold(BaseCommand):
         return (
             "Deletes a **Status Threshold** definition.\n"
             "**Input Parameters**:\n"
-            "- activity (Required): The activity type.\n"
+            "- threshold_name (Required): The name of the threshold.\n"
             "**Output Parameters**:\n"
             "- Result: Success message indicating the threshold was deleted."
         )
@@ -158,12 +191,12 @@ class DeleteStatusThreshold(BaseCommand):
         return {
             "type": "object",
             "properties": {
-                "activity": {"type": "string", "description": "Activity."}
+                "threshold_name": {"type": "string", "description": "Threshold name."}
             },
-            "required": ["activity"]
+            "required": ["threshold_name"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        return self._execute_simple_query(f"DELETE STATUSTHRESHOLD {arguments['activity']}")
+        return self._execute_simple_query(f"DELETE STATUSTHRESHOLD {arguments['threshold_name']}")
 
 class DefineStorageRule(BaseCommand):
     @property

@@ -152,7 +152,7 @@ class DeleteClient(BaseCommand):
             "required": ["client_name"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        return self._execute_simple_query(f"DELETE NODE {arguments['client_name']}")
+        return self._execute_simple_query(f"REMOVE NODE {arguments['client_name']}")
 
 class DeleteNode(BaseCommand):
     @property
@@ -177,7 +177,7 @@ class DeleteNode(BaseCommand):
             "required": ["node_name"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        return self._execute_simple_query(f"DELETE NODE {arguments['node_name']}")
+        return self._execute_simple_query(f"REMOVE NODE {arguments['node_name']}")
 
 class QueryClient(BaseCommand):
     @property
