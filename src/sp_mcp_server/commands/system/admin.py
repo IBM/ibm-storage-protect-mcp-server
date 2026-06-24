@@ -1,5 +1,11 @@
 from typing import Any, Dict
+import logging
 from ..base import BaseCommand
+
+# Configure logger for admin operations
+logger = logging.getLogger(__name__)
+
+PROTECTED_SYSTEM_ADMINS = {"ADMIN"}
 
 class DefineAdmin(BaseCommand):
     @property
@@ -90,8 +96,26 @@ class SetUserLock(BaseCommand):
             "required": ["user_name", "lock_status"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        action = "LOCK ADMIN" if arguments["lock_status"] == "lock" else "UNLOCK ADMIN"
-        return self._execute_simple_query(f"{action} {arguments['user_name']}")
+        user_name = arguments["user_name"].strip()
+        lock_status = arguments["lock_status"]
+        
+        # Protect administrators with SYSTEM privileges from being locked
+        if lock_status == "lock":
+            query_result = self._execute_simple_query(f"QUERY ADMIN {user_name}")
+            
+            if "System" in query_result or "SYSTEM" in query_result:
+                logger.warning(
+                    f"SECURITY: Blocked attempt to lock administrator with SYSTEM privileges: {user_name}"
+                )
+                return (
+                    f"Refusing to lock administrator account: {user_name}. "
+                    f"This account has SYSTEM privileges which are critical for system administration. "
+                    "Use direct server access if this operation is truly required."
+                )
+        
+        action = "LOCK ADMIN" if lock_status == "lock" else "UNLOCK ADMIN"
+        logger.info(f"Setting lock status for user: {user_name}, action: {action}")
+        return self._execute_simple_query(f"{action} {user_name}")
 
 class GrantAuthority(BaseCommand):
     @property
@@ -118,9 +142,21 @@ class GrantAuthority(BaseCommand):
             "required": ["user_name", "classes"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
+        user_name = arguments["user_name"].strip()
+        classes = arguments["classes"].strip()
+        normalized_classes = {part.strip().upper() for part in classes.replace(",", " ").split() if part.strip()}
+        
+        # Log privilege grants, especially SYSTEM privileges
+        if "SYSTEM" in normalized_classes:
+            logger.warning(
+                f"SECURITY: Granting SYSTEM authority to user: {user_name}. "
+                f"Requested classes: {classes}"
+            )
+        else:
+            logger.info(f"Granting authority to user: {user_name}, classes: {classes}")
+        
         # Syntax: GRANT AUTHORITY admin_name CLASSES=class_name
-        # Or simple: GRANT AUTHORITY admin_name class_name
-        return self._execute_simple_query(f"GRANT AUTHORITY {arguments['user_name']} CLASSES={arguments['classes']}")
+        return self._execute_simple_query(f"GRANT AUTHORITY {user_name} CLASSES={classes}")
 
 class RevokeAuthority(BaseCommand):
     @property
@@ -130,11 +166,15 @@ class RevokeAuthority(BaseCommand):
     def description(self) -> str:
         return (
             "- Description: Revokes specific **Privilege Classes** from an administrator.\n\n"
+            "**IMPORTANT**: Administrators with SYSTEM privileges cannot have those privileges revoked via this tool. "
+            "This safeguard prevents accidental lockout of system administrators. "
+            "The tool will query the administrator's current privileges before attempting revocation. "
+            "Use direct server access with explicit manual procedures if such changes are truly required.\n\n"
             "**Input Parameters**:\n"
             "- user_name (Required): The name of the administrator.\n"
             "- classes (Required): Space-separated list of privilege classes to revoke.\n\n"
             "**Output Parameters**:\n"
-            "- Result: Success message indicating the authority was revoked."
+            "- Result: Success message indicating the authority was revoked, or a protection message if the operation was blocked."
         )
     @property
     def args_schema(self) -> Dict[str, Any]:
@@ -147,7 +187,29 @@ class RevokeAuthority(BaseCommand):
             "required": ["user_name", "classes"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        return self._execute_simple_query(f"REVOKE AUTHORITY {arguments['user_name']} CLASSES={arguments['classes']}")
+        user_name = arguments["user_name"].strip()
+        classes = arguments["classes"].strip()
+        normalized_classes = {part.strip().upper() for part in classes.replace(",", " ").split() if part.strip()}
+
+        # Check if trying to revoke SYSTEM privileges
+        if "SYSTEM" in normalized_classes:
+            # Query current privileges of the user
+            query_result = self._execute_simple_query(f"QUERY ADMIN {user_name}")
+            
+            # Check if user currently has SYSTEM privileges
+            if "System" in query_result or "SYSTEM" in query_result:
+                logger.warning(
+                    f"SECURITY: Blocked attempt to revoke SYSTEM authority from administrator with SYSTEM privileges: {user_name}. "
+                    f"Requested classes: {classes}"
+                )
+                return (
+                    f"Refusing to revoke SYSTEM authority from administrator account: {user_name}. "
+                    f"This account currently has SYSTEM privileges which are critical for system administration. "
+                    "Use direct server access and an explicit manual change process if this is truly required."
+                )
+
+        logger.info(f"Revoking authority from user: {user_name}, classes: {classes}")
+        return self._execute_simple_query(f"REVOKE AUTHORITY {user_name} CLASSES={classes}")
 
 class RegisterLicense(BaseCommand):
     @property
@@ -199,7 +261,23 @@ class DeleteAdmin(BaseCommand):
             "required": ["admin_name"]
         }
     def execute(self, arguments: Dict[str, Any]) -> str:
-        return self._execute_simple_query(f"REMOVE ADMIN {arguments['admin_name']}")
+        admin_name = arguments["admin_name"].strip()
+        
+        # Protect administrators with SYSTEM privileges from deletion
+        query_result = self._execute_simple_query(f"QUERY ADMIN {admin_name}")
+        
+        if "System" in query_result or "SYSTEM" in query_result:
+            logger.warning(
+                f"SECURITY: Blocked attempt to delete administrator with SYSTEM privileges: {admin_name}"
+            )
+            return (
+                f"Refusing to delete administrator account: {admin_name}. "
+                f"This account has SYSTEM privileges which are critical for system administration. "
+                "Use direct server access if this operation is truly required."
+            )
+        
+        logger.info(f"Deleting administrator account: {admin_name}")
+        return self._execute_simple_query(f"REMOVE ADMIN {admin_name}")
 
 class QueryAdminUser(BaseCommand):
     @property
