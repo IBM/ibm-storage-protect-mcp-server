@@ -70,9 +70,23 @@ class BaseCommand(ABC):
         return []
 
     def _format_command_error(self, prefix: str, stdout: str, stderr: str) -> str:
-        """Return the most useful command error text available."""
-        error_text = (stderr or "").strip() or (stdout or "").strip()
-        return f"{prefix}{error_text}"
+        """
+        Return comprehensive error text from both stdout and stderr.
+        IBM Storage Protect often puts ANR* error messages in stdout, not stderr.
+        """
+        # Combine both stdout and stderr to capture all error messages
+        stdout_text = (stdout or "").strip()
+        stderr_text = (stderr or "").strip()
+        
+        # Build comprehensive error message
+        error_parts = []
+        if stdout_text:
+            error_parts.append(f"Output: {stdout_text}")
+        if stderr_text:
+            error_parts.append(f"Error: {stderr_text}")
+        
+        error_text = "\n".join(error_parts) if error_parts else "Unknown error occurred"
+        return f"{prefix}\n{error_text}"
 
     def _execute_simple_query(self, query_cmd: str) -> str:
         """
@@ -80,7 +94,7 @@ class BaseCommand(ABC):
         """
         stdout, stderr, code = self.cli.execute(query_cmd)
         if code != 0:
-            return self._format_command_error("Error executing command: ", stdout, stderr)
+            return self._format_command_error("Error executing command:", stdout, stderr)
         return stdout
 
 
@@ -116,13 +130,27 @@ class BaseOfflineCommand(ABC):
         """Execute and return output."""
         stdout, stderr, code = self.cli.execute(command)
         if code != 0:
-            return self._format_command_error("Error executing utility: ", stdout, stderr)
+            return self._format_command_error("Error executing utility:", stdout, stderr)
         return stdout
 
     def _format_command_error(self, prefix: str, stdout: str, stderr: str) -> str:
-        """Return the most useful command error text available."""
-        error_text = (stderr or "").strip() or (stdout or "").strip()
-        return f"{prefix}{error_text}"
+        """
+        Return comprehensive error text from both stdout and stderr.
+        IBM Storage Protect often puts ANR* error messages in stdout, not stderr.
+        """
+        # Combine both stdout and stderr to capture all error messages
+        stdout_text = (stdout or "").strip()
+        stderr_text = (stderr or "").strip()
+        
+        # Build comprehensive error message
+        error_parts = []
+        if stdout_text:
+            error_parts.append(f"Output: {stdout_text}")
+        if stderr_text:
+            error_parts.append(f"Error: {stderr_text}")
+        
+        error_text = "\n".join(error_parts) if error_parts else "Unknown error occurred"
+        return f"{prefix}\n{error_text}"
 
 
 from ..cli_wrapper import ServermonWrapper
@@ -156,10 +184,24 @@ class BaseServermonCommand(ABC):
     def _execute_servermon(self, args: List[str]) -> str:
         stdout, stderr, code = self.cli.execute(args)
         if code != 0:
-            return self._format_command_error("Error running servermon: ", stdout, stderr)
+            return self._format_command_error("Error running servermon:", stdout, stderr)
         return stdout
 
     def _format_command_error(self, prefix: str, stdout: str, stderr: str) -> str:
-        """Return the most useful command error text available."""
-        error_text = (stderr or "").strip() or (stdout or "").strip()
-        return f"{prefix}{error_text}"
+        """
+        Return comprehensive error text from both stdout and stderr.
+        IBM Storage Protect often puts ANR* error messages in stdout, not stderr.
+        """
+        # Combine both stdout and stderr to capture all error messages
+        stdout_text = (stdout or "").strip()
+        stderr_text = (stderr or "").strip()
+        
+        # Build comprehensive error message
+        error_parts = []
+        if stdout_text:
+            error_parts.append(f"Output: {stdout_text}")
+        if stderr_text:
+            error_parts.append(f"Error: {stderr_text}")
+        
+        error_text = "\n".join(error_parts) if error_parts else "Unknown error occurred"
+        return f"{prefix}\n{error_text}"

@@ -50,13 +50,25 @@ class DsmAdmcWrapper:
             logger.info(f"Executing dsmadmc command: {command}")
             logger.debug(f"Full command args: {' '.join(args[:6])} [credentials hidden] {' '.join(cmd_parts)}")
             
-            # Run the command
-            process = subprocess.run(
-                args,
-                capture_output=True,
-                text=True,
-                check=False # We don't want to raise on non-zero exit, we handle it
-            )
+            # Run the command with a timeout to prevent MCP protocol timeout
+            # IBM Storage Protect commands should complete within 30 seconds
+            # If they don't, we'll get a TimeoutExpired exception with partial output
+            try:
+                process = subprocess.run(
+                    args,
+                    capture_output=True,
+                    text=True,
+                    check=False,  # We don't want to raise on non-zero exit, we handle it
+                    timeout=30  # 30 second timeout to fail fast with actual errors
+                )
+            except subprocess.TimeoutExpired as e:
+                # Command timed out - return partial output if available
+                stdout = e.stdout.decode() if e.stdout else ""
+                stderr = e.stderr.decode() if e.stderr else ""
+                logger.error(f"Command timed out after 30 seconds")
+                logger.error(f"Partial stdout: {stdout}")
+                logger.error(f"Partial stderr: {stderr}")
+                return stdout, stderr or "Command execution timed out after 30 seconds", 124
             
             # Log execution results
             if process.returncode == 0:
@@ -108,22 +120,36 @@ class DsmServWrapper:
                 full_command = " ".join(args)
                 su_args = ["su", "-", self.config.instance_user, "-c", full_command]
                 logger.info(f"Executing offline command as {self.config.instance_user}: {full_command}")
-                process = subprocess.run(
-                    su_args,
-                    capture_output=True,
-                    text=True,
-                    check=False
-                )
+                try:
+                    process = subprocess.run(
+                        su_args,
+                        capture_output=True,
+                        text=True,
+                        check=False,
+                        timeout=30
+                    )
+                except subprocess.TimeoutExpired as e:
+                    stdout = e.stdout.decode() if e.stdout else ""
+                    stderr = e.stderr.decode() if e.stderr else ""
+                    logger.error(f"Offline command timed out after 30 seconds")
+                    return stdout, stderr or "Command execution timed out after 30 seconds", 124
             else:
                 # Fallback to running as current user (may fail with library errors)
                 logger.warning("SP_INSTANCE_USER not configured. Running dsmserv as current user may fail.")
                 logger.info(f"Executing offline command: {' '.join(args)}")
-                process = subprocess.run(
-                    args,
-                    capture_output=True,
-                    text=True,
-                    check=False
-                )
+                try:
+                    process = subprocess.run(
+                        args,
+                        capture_output=True,
+                        text=True,
+                        check=False,
+                        timeout=30
+                    )
+                except subprocess.TimeoutExpired as e:
+                    stdout = e.stdout.decode() if e.stdout else ""
+                    stderr = e.stderr.decode() if e.stderr else ""
+                    logger.error(f"Offline command timed out after 30 seconds")
+                    return stdout, stderr or "Command execution timed out after 30 seconds", 124
             
             return process.stdout, process.stderr, process.returncode
         except FileNotFoundError:
@@ -243,22 +269,36 @@ class ServermonWrapper:
                 command_str = " ".join(full_cmd)
                 su_args = ["su", "-", self.config.instance_user, "-c", command_str]
                 logger.info(f"Executing servermon command as {self.config.instance_user}: {command_str}")
-                process = subprocess.run(
-                    su_args,
-                    capture_output=True,
-                    text=True,
-                    check=False
-                )
+                try:
+                    process = subprocess.run(
+                        su_args,
+                        capture_output=True,
+                        text=True,
+                        check=False,
+                        timeout=30
+                    )
+                except subprocess.TimeoutExpired as e:
+                    stdout = e.stdout.decode() if e.stdout else ""
+                    stderr = e.stderr.decode() if e.stderr else ""
+                    logger.error(f"Servermon command timed out after 30 seconds")
+                    return stdout, stderr or "Command execution timed out after 30 seconds", 124
             else:
                 # Fallback to running as current user (may fail with library errors)
                 logger.warning("SP_INSTANCE_USER not configured. Running servermon as current user may fail.")
                 logger.info(f"Executing servermon command: {' '.join(full_cmd)}")
-                process = subprocess.run(
-                    full_cmd,
-                    capture_output=True,
-                    text=True,
-                    check=False
-                )
+                try:
+                    process = subprocess.run(
+                        full_cmd,
+                        capture_output=True,
+                        text=True,
+                        check=False,
+                        timeout=30
+                    )
+                except subprocess.TimeoutExpired as e:
+                    stdout = e.stdout.decode() if e.stdout else ""
+                    stderr = e.stderr.decode() if e.stderr else ""
+                    logger.error(f"Servermon command timed out after 30 seconds")
+                    return stdout, stderr or "Command execution timed out after 30 seconds", 124
             
             return process.stdout, process.stderr, process.returncode
         except FileNotFoundError:
