@@ -21,7 +21,7 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: System Administrators",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -39,10 +39,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/sp-mcp-server"
-Documentation = "https://github.com/yourusername/sp-mcp-server/tree/main/docs"
-Repository = "https://github.com/yourusername/sp-mcp-server"
-Issues = "https://github.com/yourusername/sp-mcp-server/issues"
+Homepage = "https://github.com/IBM/ibm-storage-protect-mcp-server"
+Documentation = "https://github.com/IBM/ibm-storage-protect-mcp-server/tree/main/docs"
+Repository = "https://github.com/IBM/ibm-storage-protect-mcp-server"
+Issues = "https://github.com/IBM/ibm-storage-protect-mcp-server/issues"
 
 [project.scripts]
 sp-mcp-server = "sp_mcp_server.main:main"
